@@ -32,23 +32,20 @@
             android:layout_marginBottom="40dp"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="40dp"
+            android:visibility="gone">
 
 
         </android.support.v7.widget.RecyclerView>
-
-        <TextView
-            android:id="@+id/tv_store_type"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:layout_marginTop="40dp"
-            android:background="#55000000"
-            android:gravity="center"
-            android:padding="2dp"
-            android:textColor="@color/colorPrimary"
-            android:visibility="gone"/>
+            android:layout_height="match_parent"
+            >
+
+
+        </android.support.v4.view.ViewPager>
+
     </RelativeLayout>
 
 

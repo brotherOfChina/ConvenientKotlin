@@ -1,20 +1,84 @@
 package com.example.administrator.convenientkotlin.ui.activities
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import com.example.administrator.convenientkotlin.R
-import com.example.administrator.convenientkotlin.data.Server.NavTypeByRequest
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+import com.example.administrator.convenientkotlin.domain.model.NavBean
+import com.example.administrator.convenientkotlin.domain.model.ResponseBean
+import com.example.administrator.convenientkotlin.ui.adapters.FrgmentAdapter
+import com.example.administrator.convenientkotlin.ui.adapters.NavAdapter
+import com.example.administrator.convenientkotlin.ui.fragments.GoodsFragment
+import com.example.administrator.convenientkotlin.ui.fragments.RXFragment
+import com.example.administrator.convenientkotlin.ui.fragments.TypeFragment
+import com.example.administrator.convenientkotlin.ui.fragments.VertifyFregment
+import com.example.administrator.convenientkotlin.utils.SignUtil
+import com.vise.log.ViseLog
+import com.vise.xsnow.http.ViseHttp
+import com.vise.xsnow.http.callback.ACallback
+import com.vise.xsnow.ui.BaseActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+    override fun bindEvent() {
+        //请求数据所用的参数，sign将用一个通用方法进行添加
+        val map = mutableMapOf<String, String>()
+        map.put("c", "Nav")
+        map.put("m", "Screen")
+        map.put("v", "CV1")
+
+        map.put("sign", SignUtil.getSignString(map))
+        ViseHttp.POST().addParams(map)
+                .request(object : ACallback<ResponseBean<NavBean>>() {
+                    override fun onSuccess(data: ResponseBean<NavBean>?) {
+                        if (data != null) {
+                            val nav = data.data
+                            rv_nav.adapter = NavAdapter(nav) {
+                               when{
+                                   it.nav_id .equals("2")->vp_content.currentItem=1
+                                   it.nav_id .equals("3")->vp_content.currentItem=0
+                                   it.nav_id .equals("4")->vp_content.currentItem=2
+                                   it.nav_id .equals("5")->vp_content.currentItem=3
+                               }
+                            }
+                        }
+                    }
+
+                    override fun onFail(errCode: Int, errMsg: String?) {
+                       ViseLog.i(errMsg+errCode)
+                    }
+
+
+                })
+
+    }
+
+    override fun initView() {
+        val fragmentList = listOf<Fragment>(
+                RXFragment(),TypeFragment() , GoodsFragment(), VertifyFregment()
+        )
+        vp_content.adapter = FrgmentAdapter(supportFragmentManager, fragmentList)
+        vp_content.currentItem = 1
+    }
+
+    override fun initData() {
+    }
+
+    override fun processClick(view: View?) {
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //取消标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        //取消状态栏
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
-//        rv_nav.layoutManager=LinearLayoutManager(this)
-        loadNavBean()
+        rv_nav.layoutManager=LinearLayoutManager(this)
 
     }
 
@@ -22,9 +86,4 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
     }
 
-    private fun loadNavBean()=async(UI) {
-        val map = mapOf<String,String>("c" to "Nav","m" to "Screen" ,"sign" to "c56bb05340cfc3ae006945cc1520ace3" ,"v" to "CV1" )
-        bg {  NavTypeByRequest(map).excute() }
-
-    }
 }
