@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.domain.model.NavBean
-import com.vise.log.ViseLog
 import kotlinx.android.synthetic.main.item_nav.view.*
 
 /**

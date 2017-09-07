@@ -16,12 +16,13 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class MyApplication : Application() {
     companion object {
-        var instance:MyApplication by DelegatesExt.notNullSingleValue()
+        var instance: MyApplication by DelegatesExt.notNullSingleValue()
     }
+
     override fun onCreate() {
         super.onCreate()
 
-         instance=this
+        instance = this
         ViseHttp.init(instance)
         ViseLog.getLogConfig()
                 .configAllowLog(true)//是否输出日志
@@ -29,7 +30,7 @@ class MyApplication : Application() {
                 .configTagPrefix("zpj")//设置标签前缀
                 .configFormatTag("%d{HH:mm:ss:SSS} %t %c{-5}")//个性化设置标签，默认显示包名
                 .configLevel(Log.VERBOSE)//设置日志最小输出级别，默认Log.VERBOSE
-        ViseLog.plant( LogcatTree())//添加打印日志信息到Logcat的树
+        ViseLog.plant(LogcatTree())//添加打印日志信息到Logcat的树
         ViseHttp.CONFIG()
                 //配置请求主机地址
                 .baseUrl("http://www.jinxiangqizhong.com:83/apicontrol/conv/")

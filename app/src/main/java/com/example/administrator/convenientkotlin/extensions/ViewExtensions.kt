@@ -28,10 +28,11 @@ fun View.slideEnter() {
     }
 }
 
-fun ImageView.show(url: String) {
-    Glide.with(context).load(url)
+fun ImageView?.show(url: String) {
+    Glide.with(this?.ctx).load(url)
             .placeholder(R.drawable.image_loading)
             .error(R.drawable.default_error)
+            .centerCrop()
             .crossFade()
             .dontAnimate().
             into(this)

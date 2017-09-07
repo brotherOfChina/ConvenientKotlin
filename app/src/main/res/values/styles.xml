@@ -7,5 +7,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="loadingDialog" parent="android:Animation.Dialog">
 
+        <item name="android:gravity">center</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item> <!-- 模糊 -->
+        <item name="android:windowIsFloating">true</item><!-- 类似windows的弹出Dialog -->
+        <item name="android:windowContentOverlay">@null</item><!-- 不要头部阴影 -->
+        <item name="android:windowBackground">@color/transparent</item>   <!-- 背景颜色设置透明-->
+    </style>
 </resources>

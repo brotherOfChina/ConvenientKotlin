@@ -3,8 +3,11 @@ package com.example.administrator.convenientkotlin.domain.model
 /**
  * Created by Administrator on 2017/9/1 0001.
  * 返回值实例
+ *
  */
-data class ResponseBean<T>(val status: Int, val msg: String, val data: List<T>)
+data class ResponseBean< T>(val status: Int, val msg: String, val data: DataBean<T>)
+data class ResponseNavBean< T>(val status: Int, val msg: String, val data: List<T>)
+
 
 data class NavBean(val internal: String,
                    val nav_id: String,
@@ -16,7 +19,7 @@ data class NavBean(val internal: String,
                    val is_default: String,
                    val is_layout: String,
                    val category_id: String)
-
+data class DataBean<T>(val list:List<T>)
 data class GoodBean(val content_id: String,
                     val name: String,
                     val price: String,

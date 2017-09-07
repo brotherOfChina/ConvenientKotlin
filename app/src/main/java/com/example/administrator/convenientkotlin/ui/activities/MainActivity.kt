@@ -8,7 +8,7 @@ import android.view.Window
 import android.view.WindowManager
 import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.domain.model.NavBean
-import com.example.administrator.convenientkotlin.domain.model.ResponseBean
+import com.example.administrator.convenientkotlin.domain.model.ResponseNavBean
 import com.example.administrator.convenientkotlin.ui.adapters.FrgmentAdapter
 import com.example.administrator.convenientkotlin.ui.adapters.NavAdapter
 import com.example.administrator.convenientkotlin.ui.fragments.GoodsFragment
@@ -31,17 +31,18 @@ class MainActivity : BaseActivity() {
         map.put("v", "CV1")
 
         map.put("sign", SignUtil.getSignString(map))
+        ViseLog.i(map)
         ViseHttp.POST().addParams(map)
-                .request(object : ACallback<ResponseBean<NavBean>>() {
-                    override fun onSuccess(data: ResponseBean<NavBean>?) {
+                .request(object : ACallback<ResponseNavBean<NavBean>>() {
+                    override fun onSuccess(data: ResponseNavBean<NavBean>?) {
                         if (data != null) {
                             val nav = data.data
                             rv_nav.adapter = NavAdapter(nav) {
                                when{
-                                   it.nav_id .equals("2")->vp_content.currentItem=1
-                                   it.nav_id .equals("3")->vp_content.currentItem=0
-                                   it.nav_id .equals("4")->vp_content.currentItem=2
-                                   it.nav_id .equals("5")->vp_content.currentItem=3
+                                   it.nav_id == "2" ->vp_content.currentItem=1
+                                   it.nav_id == "3" ->vp_content.currentItem=0
+                                   it.nav_id == "4" ->vp_content.currentItem=2
+                                   it.nav_id == "5" ->vp_content.currentItem=3
                                }
                             }
                         }
@@ -55,13 +56,13 @@ class MainActivity : BaseActivity() {
                 })
 
     }
-
     override fun initView() {
         val fragmentList = listOf<Fragment>(
-                RXFragment(),TypeFragment() , GoodsFragment(), VertifyFregment()
+                RXFragment() ,TypeFragment() , GoodsFragment(), VertifyFregment()
         )
         vp_content.adapter = FrgmentAdapter(supportFragmentManager, fragmentList)
         vp_content.currentItem = 1
+        vp_content.offscreenPageLimit=4
     }
 
     override fun initData() {
