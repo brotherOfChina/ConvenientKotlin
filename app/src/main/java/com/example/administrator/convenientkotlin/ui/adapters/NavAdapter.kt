@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.domain.model.NavBean
-import kotlinx.android.synthetic.main.item_nav.view.*
+import kotlinx.android.synthetic.main.adapter_nav.view.*
 
 /**
  * Created by Administrator on 2017/9/4 0004.
@@ -21,7 +21,7 @@ class NavAdapter(val data: List<NavBean>, val itemClick: (NavBean) -> Unit) : Re
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_nav, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_nav, parent, false)
         view.layoutParams=ViewGroup.LayoutParams(parent.height/4,parent.height/4)
         view.setPadding(parent.width / 8, parent.width / 8, parent.width / 8, parent.width / 8)
         return ViewHolder(view, itemClick)

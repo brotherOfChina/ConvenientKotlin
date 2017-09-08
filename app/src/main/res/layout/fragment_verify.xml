@@ -1,23 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:textSize="20sp"
-        android:gravity="center"
         android:id="@+id/tv_title"
-        android:textColor="@color/colorPrimary"
-        />
-    <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
+        android:gravity="center"
+        android:text="自助结账"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
         android:id="@+id/et_verify_num"
-        android:maxLines="1"
-        android:maxLength="20"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/colorPrimary"
         android:inputType="number"
-        android:layout_margin="20dp"
+        android:maxLength="19"
+        android:maxLines="1"
         android:padding="10dp"
-        android:background="@color/colorPrimary"/>
-</LinearLayout>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_order"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_margin="20dp"
+        android:gravity="start"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/gl"
+        app:layout_constraintTop_toBottomOf="@+id/et_verify_num" />
+
+    <TextView
+        android:id="@+id/tv_preferential"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_margin="20dp"
+        android:gravity="start"
+
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/gl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_order" />
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_margin="20dp"
+
+        android:gravity="start"
+
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/gl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_preferential" />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_margin="20dp"
+
+        android:gravity="start"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/gl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_num" />
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_margin="20dp"
+
+        android:gravity="start"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/gl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_amount" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_verify"
+        android:layout_width="0dp"
+
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/gl"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_verify_num" />
+
+
+</android.support.constraint.ConstraintLayout>

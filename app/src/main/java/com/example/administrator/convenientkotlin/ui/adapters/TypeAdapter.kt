@@ -8,7 +8,7 @@ import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.domain.model.TypeBean
 import com.example.administrator.convenientkotlin.extensions.ctx
 import com.example.administrator.convenientkotlin.extensions.show
-import kotlinx.android.synthetic.main.item_store_nav.view.*
+import kotlinx.android.synthetic.main.adapter_store_nav.view.*
 
 /**
  * Created by Administrator on 2017/9/5 0005.
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_store_nav.view.*
  */
 class TypeAdapter (val data:List<TypeBean>,val itemClick: (TypeBean) -> Unit):RecyclerView.Adapter<TypeAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-       val view=LayoutInflater.from(parent.ctx).inflate(R.layout.item_store_nav,parent,false)
+       val view=LayoutInflater.from(parent.ctx).inflate(R.layout.adapter_store_nav,parent,false)
         view.layoutParams=ViewGroup.LayoutParams(parent.width/5,parent.height/2)
         return ViewHolder(view,itemClick)
     }

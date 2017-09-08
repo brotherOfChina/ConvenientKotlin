@@ -31,9 +31,10 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.google.code.gson:gson:2.8.0'
-    //kotlin
+    //support
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    //kotlin
     compile "org.jetbrains.anko:anko-common:$anko_version"
     compile "org.jetbrains.anko:anko-sqlite:$anko_version"
     compile "org.jetbrains.anko:anko-coroutines:$anko_version"
@@ -45,7 +46,6 @@ dependencies {
     //一般工具依赖库
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.vise.xiaoyaoyou:xsnow:2.0.2'
-    compile 'com.vise.xiaoyaoyou:viselog:1.1.2'
     //Adding Components to your Project
     //Add Architecture Components
     compile "android.arch.lifecycle:runtime:$components_version"

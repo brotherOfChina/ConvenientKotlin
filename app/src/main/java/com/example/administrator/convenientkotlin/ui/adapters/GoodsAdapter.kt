@@ -8,7 +8,7 @@ import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.domain.model.GoodBean
 import com.example.administrator.convenientkotlin.extensions.ctx
 import com.example.administrator.convenientkotlin.extensions.show
-import kotlinx.android.synthetic.main.item_goods_list.view.*
+import kotlinx.android.synthetic.main.adapter_goods_list.view.*
 
 /**
  * Created by Administrator on 2017/9/4 0004.
@@ -22,7 +22,7 @@ class GoodsAdapter(val data:List<GoodBean>,val itemClick: (GoodBean) -> Unit):Re
     override fun getItemCount(): Int =data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view=LayoutInflater.from(parent.ctx).inflate(R.layout.item_goods_list,parent,false)
+        val view=LayoutInflater.from(parent.ctx).inflate(R.layout.adapter_goods_list,parent,false)
         return ViewHolder(view,itemClick )
     }
 

@@ -14,7 +14,7 @@ import com.example.administrator.convenientkotlin.ui.adapters.NavAdapter
 import com.example.administrator.convenientkotlin.ui.fragments.GoodsFragment
 import com.example.administrator.convenientkotlin.ui.fragments.RXFragment
 import com.example.administrator.convenientkotlin.ui.fragments.TypeFragment
-import com.example.administrator.convenientkotlin.ui.fragments.VertifyFregment
+import com.example.administrator.convenientkotlin.ui.fragments.VerifyFragment
 import com.example.administrator.convenientkotlin.utils.SignUtil
 import com.vise.log.ViseLog
 import com.vise.xsnow.http.ViseHttp
@@ -58,7 +58,7 @@ class MainActivity : BaseActivity() {
     }
     override fun initView() {
         val fragmentList = listOf<Fragment>(
-                RXFragment() ,TypeFragment() , GoodsFragment(), VertifyFregment()
+                RXFragment() ,TypeFragment() , GoodsFragment(), VerifyFragment()
         )
         vp_content.adapter = FrgmentAdapter(supportFragmentManager, fragmentList)
         vp_content.currentItem = 1

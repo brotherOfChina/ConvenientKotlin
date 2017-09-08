@@ -30,3 +30,5 @@ fun String.getQRCode( format: BarcodeFormat=BarcodeFormat.QR_CODE):Bitmap{
     bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
     return bitmap
 }
+fun String.hidePhone():String =
+        this.substring(0, 3) + "****" + this.substring(7, this.length)

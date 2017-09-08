@@ -7,6 +7,7 @@ package com.example.administrator.convenientkotlin.domain.model
  */
 data class ResponseBean< T>(val status: Int, val msg: String, val data: DataBean<T>)
 data class ResponseNavBean< T>(val status: Int, val msg: String, val data: List<T>)
+data class ResponseDataBean(val status: Int, val msg: String, val data: VerifyOrderBean)
 
 
 data class NavBean(val internal: String,

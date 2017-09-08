@@ -1,7 +1,6 @@
 package com.example.administrator.convenientkotlin.ui.fragments
 
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.data.Server.RequestApi
@@ -34,12 +33,15 @@ class TypeFragment : BaseFragment(),GoodsResult<ResponseBean<GoodBean>> {
     }
 
     override fun initData() {
-        rv_type.layoutManager = GridLayoutManager(activity, 4) as RecyclerView.LayoutManager?
+        rv_type.layoutManager = GridLayoutManager(activity, 4)
         RequestApi.executeType(object : RequestCallBack<ResponseBean<TypeBean>>() {
             override fun success(data: ResponseBean<TypeBean>) {
                 val adapter: TypeAdapter by lazy {
+
                     TypeAdapter(data.data.list) {
                         with(it) {
+                            tv_title.text=category_name
+                            tv_title.visibility=View.VISIBLE
                             requestGood(category_id)
                         }
                     }
@@ -58,7 +60,6 @@ class TypeFragment : BaseFragment(),GoodsResult<ResponseBean<GoodBean>> {
                     }
                 }
                 rv_type.layoutManager = GridLayoutManager(activity, 5)
-
                 rv_type.adapter = adapter
             }
         })
@@ -70,7 +71,8 @@ class TypeFragment : BaseFragment(),GoodsResult<ResponseBean<GoodBean>> {
     }
 
     override fun initView(contentView: View?) {
-        tv_title.setOnClickListener{initData()}
+        tv_title.setOnClickListener{initData()
+        tv_title.visibility=View.GONE}
     }
 
 }
