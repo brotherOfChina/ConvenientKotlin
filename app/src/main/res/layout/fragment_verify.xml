@@ -4,19 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1"
 
+        />
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/gl_horizontal"
+        android:textColor="@color/colorPrimary"
         android:gravity="center"
         android:text="自助结账"
-        android:textColor="@color/colorPrimary"
         android:textSize="20sp"
-
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
+        />
+    <TextView
+        android:id="@+id/store_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/gl_horizontal"
+        app:layout_constraintLeft_toRightOf="@+id/tv_title"
+        android:text="(华都店)"
+        android:textColor="@color/colorPrimary"
+        android:padding="2dp"/>
     <EditText
         android:id="@+id/et_verify_num"
         android:layout_width="0dp"

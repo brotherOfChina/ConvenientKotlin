@@ -9,6 +9,7 @@ import com.example.administrator.convenientkotlin.domain.commands.HttpResult
 import com.example.administrator.convenientkotlin.domain.model.VerifyOrderBean
 import com.example.administrator.convenientkotlin.extensions.hidePhone
 import com.example.administrator.convenientkotlin.ui.adapters.VerifyAdapter
+import com.example.administrator.convenientkotlin.ui.dialog.ListDialog
 import com.example.administrator.convenientkotlin.utils.SignUtil
 import com.google.gson.Gson
 import com.vise.log.ViseLog
@@ -28,6 +29,7 @@ import org.json.JSONObject
  * 验证单fragment
  */
 class VerifyFragment : BaseFragment() {
+    var user_id:String="64259"
     override fun bindEvent() {
     }
 
@@ -42,7 +44,21 @@ class VerifyFragment : BaseFragment() {
 
     override fun initView(contentView: View?) {
         rv_verify.layoutManager = LinearLayoutManager(activity)
-
+        store_name.text="(华都店)"
+        val names= mapOf(
+                "(华都店)" to "64259",
+                "(迎宾西街店)" to "76620",
+                "(颐景店)" to "2342",
+                "(东阳店)" to "1888",
+                "(新华店)"  to "93044"
+        )
+        val storeDialog:ListDialog by lazy {
+            ListDialog(this,names)
+        }
+        store_name.setOnClickListener {
+            storeDialog.show()
+            ViseLog.i(user_id)
+        }
         et_verify_num.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
@@ -56,7 +72,7 @@ class VerifyFragment : BaseFragment() {
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //&&s.subSequence(0,3).toString().equals("0715")
                 if (s?.length == 18) {
-                    requestVerify(s.toString())
+                    requestVerify(s.toString(),user_id )
 
                 }
 
@@ -65,14 +81,14 @@ class VerifyFragment : BaseFragment() {
         })
     }
 
-    private fun requestVerify(num: String) {
+    private fun requestVerify(num: String, user_id: String) {
         var s: String
         val map = mutableMapOf<String, String>()
         map.put("v", "CV1")
         map.put("m", "Order")
         map.put("c", "Audit")
         map.put("rec_code", num)
-        map.put("audit_userid", "64259")
+        map.put("audit_userid", user_id)
         map.put("sign", SignUtil.getSignString(map))
         ViseLog.i(map)
         ViseHttp.POST().addParams(map)
