@@ -23,8 +23,19 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1189">
+        <ViewFlipper
+            android:id="@+id/vp_buy_data"
+            android:layout_margin="10dp"
+            android:flipInterval="5000"
+            android:inAnimation="@anim/anim_come_in"
+            android:outAnimation="@anim/anim_come_out"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+        </ViewFlipper>
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_content"
+            android:layout_margin="50dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

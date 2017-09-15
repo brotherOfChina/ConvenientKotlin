@@ -9,7 +9,6 @@ data class ResponseBean< T>(val status: Int, val msg: String, val data: DataBean
 data class ResponseNavBean< T>(val status: Int, val msg: String, val data: List<T>)
 data class ResponseDataBean(val status: Int, val msg: String, val data: VerifyOrderBean)
 
-
 data class NavBean(val internal: String,
                    val nav_id: String,
                    val nav_type: String,
@@ -33,3 +32,8 @@ data class GoodBean(val content_id: String,
 data class TypeBean(val category_id: String,
                     val category_name: String,
                     val icon: String)
+data class YsyBean(val code:String,
+                   val msg:String,
+                   val data:YsyDataBean)
+data class YsyDataBean(val accessToken:String,
+                       val expireTime:String)

@@ -3,6 +3,8 @@ package com.example.administrator.convenientkotlin.base
 import android.app.Application
 import android.util.Log
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
+import com.example.administrator.convenientkotlin.utils.CrashHandlerUtil
+import com.videogo.openapi.EZOpenSDK
 import com.vise.log.ViseLog
 import com.vise.log.inner.LogcatTree
 import com.vise.utils.assist.SSLUtil
@@ -18,10 +20,23 @@ class MyApplication : Application() {
     companion object {
         var instance: MyApplication by DelegatesExt.notNullSingleValue()
     }
-
+    fun getApplication():Application = instance
     override fun onCreate() {
         super.onCreate()
+        CrashHandlerUtil.getInstance().init(this)
+        /**
+         * sdk日志开关，正式发布需要去掉
+         */
+        EZOpenSDK.showSDKLog(false);
+        /**
+         * 设置是否支持P2P取流,详见api
+         */
+        EZOpenSDK.enableP2P(true);
 
+        /**
+         * APP_KEY请替换成自己申请的
+         */
+        EZOpenSDK.initLib(this, "16c4d77101c8406c8a207b0dd339839c", "");
         instance = this
         ViseHttp.init(instance)
         ViseLog.getLogConfig()

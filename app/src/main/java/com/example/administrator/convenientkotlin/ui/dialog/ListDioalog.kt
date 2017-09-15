@@ -25,7 +25,7 @@ class ListDialog( val fragment: VerifyFragment, private val maps:  Map<String,St
             user_ids.add(v)
         }
        lv_name.adapter=ArrayAdapter(fragment.activity,android.R.layout.simple_list_item_1 ,names)
-        lv_name.setOnItemClickListener { adapterView, view, i, l ->
+        lv_name.setOnItemClickListener { _, _, i, _ ->
             fragment.store_name.text=names[i]
             fragment.user_id=user_ids[i]
             dismiss()

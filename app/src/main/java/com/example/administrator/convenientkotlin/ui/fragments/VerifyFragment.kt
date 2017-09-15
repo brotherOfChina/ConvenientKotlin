@@ -100,9 +100,46 @@ class VerifyFragment : BaseFragment() {
                         httpResult.status = jo.optInt("status")
                         httpResult.msg = jo.optString("msg")
                         httpResult.response = jo.optString("data")
-                        if (httpResult.status == 0) {
+                        if (httpResult.status == 1) {
+
                             ViseLog.d(httpResult.response)
-                            val result = Gson().fromJson(httpResult.response,VerifyOrderBean::class.java)
+
+                            val result = Gson().fromJson("{\n" +
+                                    "    \"audit_store_id\": \"1\",\n" +
+                                    "    \"audit_userid\": 64259,\n" +
+                                    "    \"order_type\": \"1\",\n" +
+                                    "    \"order_no\": \"2017091215031019822393\",\n" +
+                                    "    \"store_id\": \"1\",\n" +
+                                    "    \"userid\": \"12010\",\n" +
+                                    "    \"username\": \"18404975605\",\n" +
+                                    "    \"goods_data\": [\n" +
+                                    "      {\n" +
+                                    "        \"item_id\": \"2149\",\n" +
+                                    "        \"item_status\": \"1\",\n" +
+                                    "        \"store_id\": \"1\",\n" +
+                                    "        \"goods_id\": \"5088\",\n" +
+                                    "        \"goods_sn\": \"2001300\",\n" +
+                                    "        \"goods_name\": \"\\u6bd4\\u5df4\\u535c\\u6ce1\\u6ce1\\u7cd6\",\n" +
+                                    "        \"goods_price\": \"0.30\",\n" +
+                                    "        \"goods_sett_price\": \"0.30\",\n" +
+                                    "        \"goods_img\": \"\\/5b\\/5f\\/c7\\/21\\/d2\\/9b1afc67bae8cfe6c1a0d9.jpg\",\n" +
+                                    "        \"goods_num\": \"1\",\n" +
+                                    "        \"lock_stock\": \"0\"\n" +
+                                    "      }\n" +
+                                    "    ],\n" +
+                                    "    \"coupon_data\": {\n" +
+                                    "      \"coupon_type\": \"0\",\n" +
+                                    "      \"full_amount\": \"0.00\",\n" +
+                                    "      \"reduce_amount\": \"0.00\"\n" +
+                                    "    },\n" +
+                                    "    \"total_num\": 1,\n" +
+                                    "    \"total_amount\": \"0.30\",\n" +
+                                    "    \"ctime\": \"2017-09-12 15:07:24\"\n" +
+                                    "  }",VerifyOrderBean::class.java)
+                            rl_verified.visibility=View.VISIBLE
+
+                            rl_verify.visibility=View.INVISIBLE
+                            iv_back.setImageResource(R.drawable.lv_verify)
                             if (result != null) {
                                 val adapter: VerifyAdapter by lazy {
                                     VerifyAdapter(result.goods_data)
@@ -123,7 +160,6 @@ class VerifyFragment : BaseFragment() {
                                 tv_preferential.text = "优惠:" + s + " 满" + result.coupon_data.full_amount + "减" + result.coupon_data.reduce_amount
 
                             }
-
                             tv_num.text = "商品件数:" + result.total_num + ""
                             tv_amount.text = "合计：¥" + result.total_amount
                             tv_phone.text = "用户手机号：" + result.username.hidePhone()
@@ -131,12 +167,16 @@ class VerifyFragment : BaseFragment() {
                             activity.toast(httpResult.status.toString() + httpResult.msg + "")
                         }
                         Observable.create(ObservableOnSubscribe<Int> { emitter ->
-                            Thread.sleep(3000)
+                            Thread.sleep(10000)
                             emitter.onNext(1)
                         }).subscribeOn(Schedulers.newThread())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe({
+                                    rl_verify.visibility=View.VISIBLE
+                                    rl_verified.visibility=View.INVISIBLE
+                                    iv_back.setImageResource(R.drawable.iv_verify)
                                     et_verify_num.setText("")
+
                                 })
                     }
                     override fun onFail(errCode: Int, errMsg: String) {

@@ -7,10 +7,12 @@
         android:layout_height="60dp"
         android:textSize="20sp"
         android:gravity="center"
+        android:visibility="gone"
         android:id="@+id/tv_title"
         android:textColor="@color/colorPrimary"
         />
     <TextView
+        android:id="@+id/tv_rx"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="暂未开通"
