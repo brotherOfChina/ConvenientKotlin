@@ -33,6 +33,8 @@ class TypeFragment : BaseFragment(),GoodsResult<ResponseBean<GoodBean>> {
     }
 
     override fun initData() {
+        tv_back.visibility=View.INVISIBLE
+
         rv_type.layoutManager = GridLayoutManager(activity, 4)
         RequestApi.executeType(object : RequestCallBack<ResponseBean<TypeBean>>() {
             override fun success(data: ResponseBean<TypeBean>) {
@@ -40,8 +42,7 @@ class TypeFragment : BaseFragment(),GoodsResult<ResponseBean<GoodBean>> {
 
                     TypeAdapter(data.data.list) {
                         with(it) {
-                            tv_title.text=category_name
-                            tv_title.visibility=View.VISIBLE
+
                             requestGood(category_id)
                         }
                     }
@@ -52,6 +53,7 @@ class TypeFragment : BaseFragment(),GoodsResult<ResponseBean<GoodBean>> {
     }
 
     private fun requestGood(category_id: String) {
+        tv_back.visibility=View.VISIBLE
         RequestApi.executeGood(category_id, object : RequestCallBack<ResponseBean<GoodBean>>() {
             override fun success(data: ResponseBean<GoodBean>) {
                 val adapter: GoodsAdapter by lazy {
@@ -71,8 +73,8 @@ class TypeFragment : BaseFragment(),GoodsResult<ResponseBean<GoodBean>> {
     }
 
     override fun initView(contentView: View?) {
-        tv_title.setOnClickListener{initData()
-        tv_title.visibility=View.GONE}
+
+        tv_back.setOnClickListener { initData() }
     }
 
 }

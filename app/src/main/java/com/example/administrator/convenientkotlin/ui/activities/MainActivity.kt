@@ -14,6 +14,7 @@ import com.example.administrator.convenientkotlin.domain.model.ResponseNavBean
 import com.example.administrator.convenientkotlin.extensions.hidePhone
 import com.example.administrator.convenientkotlin.ui.adapters.FrgmentAdapter
 import com.example.administrator.convenientkotlin.ui.adapters.NavAdapter
+import com.example.administrator.convenientkotlin.ui.dialog.ListDialog
 import com.example.administrator.convenientkotlin.ui.fragments.GoodsFragment
 import com.example.administrator.convenientkotlin.ui.fragments.RXFragment
 import com.example.administrator.convenientkotlin.ui.fragments.TypeFragment
@@ -23,10 +24,20 @@ import com.vise.log.ViseLog
 import com.vise.xsnow.http.ViseHttp
 import com.vise.xsnow.http.callback.ACallback
 import com.vise.xsnow.ui.BaseActivity
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
+    companion object {
+        var user_id = "64259"
+        var store_id = "1"
+    }
+
     override fun bindEvent() {
+
         //请求数据所用的参数，sign将用一个通用方法进行添加
         val map = mutableMapOf<String, String>()
         map.put("c", "Nav")
@@ -60,6 +71,22 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initView() {
+
+        store_name.text = "华都店"
+        val names = mapOf(
+                "华都店" to "64259",
+                "迎宾西街店" to "76620",
+                "颐景店" to "2342",
+                "东阳店" to "1888",
+                "新华店" to "93044"
+        )
+        val storeDialog: ListDialog by lazy {
+            ListDialog(this, names)
+        }
+        store_name.setOnClickListener {
+            storeDialog.show()
+            ViseLog.i(user_id)
+        }
         val fragmentList = listOf<Fragment>(
                 RXFragment(), TypeFragment(), GoodsFragment(), VerifyFragment()
         )
@@ -68,7 +95,9 @@ class MainActivity : BaseActivity() {
         vp_content.offscreenPageLimit = 4
     }
 
-    override fun initData() {
+    fun getBuyData(store_id: String) {
+        val currentTime = System.currentTimeMillis() / 1000
+
         /**
          * v:CV1
         m:Order
@@ -85,37 +114,52 @@ class MainActivity : BaseActivity() {
         map.put("v", "CV1")
         map.put("m", "Order")
         map.put("c", "List")
-        map.put("store_id", "1")
+        map.put("store_id", store_id)
         map.put("rec_type", "1")
         map.put("s_time", "1499999520")
-        map.put("e_time", "1505183520")
+        map.put("e_time", "$currentTime")
         map.put("page", "1")
-        map.put("perpage", "2")
-        map.put("sign", "96d72983c955cc5a310e673c07b75328")
+        map.put("perpage", "10")
+        map.put("sign", SignUtil.getSignString(map))
         ViseLog.i(map)
         ViseHttp.POST().addParams(map).request(object : ACallback<BuyData>() {
             override fun onSuccess(data: BuyData?) {
+                ViseLog.i(data)
                 if (data?.status == 0) {
-                    for (bean in data.data.list){
-                            val ll_content: View = View.inflate(mContext, R.layout.adapter_flipper, null)
-                        val tv = ll_content.findViewById<TextView>(R.id.tv_data)
-                        var s=StringBuffer()
-                        for(item in bean.items){
-                            s=s.append("“"+item.goods_name+"”*"+item.goods_num)
+                    for (bean in data.data.list) {
+                        val ll_content: View by lazy {
+                            View.inflate(mContext, R.layout.adapter_flipper, null)
                         }
-                        tv.text = "用户"+bean.phone.hidePhone()+"购买了:"+s
+                        val tv = ll_content.findViewById<TextView>(R.id.tv_data)
+                        var s = StringBuffer()
+                        for (item in bean.items) {
+                            s = s.append("“" + item.goods_name + "”*" + item.goods_num)
+                        }
+                        tv.text = "用户" + bean.phone.hidePhone() + "购买了:" + s
                         vp_buy_data.addView(ll_content)
                     }
                     vp_buy_data.animation
-                    vp_buy_data.isAutoStart=true
+                    vp_buy_data.isAutoStart = true
                     vp_buy_data.startFlipping()
                 }
+                Observable.create(ObservableOnSubscribe<Int> { emitter ->
+                    Thread.sleep(60000)
+                    emitter.onNext(1)
+                }).subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            getBuyData(MainActivity.store_id)
+                        })
             }
 
             override fun onFail(errCode: Int, errMsg: String?) {
 //                toast(errMsg)
             }
         })
+    }
+
+    override fun initData() {
+        getBuyData(MainActivity.store_id)
 
     }
 

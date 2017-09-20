@@ -4,6 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_sure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="确 认"
+        android:textSize="14sp"
+        android:visibility="gone"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_margin="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/white"
+        android:background="#ff5200"/>
     <android.support.constraint.Guideline
         android:id="@+id/gl_horizontal"
         android:layout_width="wrap_content"
@@ -25,6 +41,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:scaleType="centerInside"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:src="@drawable/iv_verify"
@@ -39,7 +56,7 @@
             android:maxLines="1"
             android:padding="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="50dp"
             android:background="@color/colorPrimary"
             android:layout_marginRight="20dp"
             android:layout_alignParentBottom="true"
@@ -50,30 +67,54 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/gl_two"
         app:layout_constraintLeft_toRightOf="@+id/gl"
-        android:visibility="gone"
         android:background="@drawable/lv_verify"
        >
-        <TextView
-            android:id="@+id/tv_order"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_verify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="80dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+        <ImageView
+            android:padding="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/divider"/>
+        <TextView
+            android:textSize="8sp"
+
+            android:id="@+id/tv_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="start"
             android:textColor="@color/content_gray"
          />
 
         <TextView
+            android:textSize="8sp"
+
+
             android:id="@+id/tv_preferential"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
+
             android:layout_marginRight="20dp"
             android:gravity="start"
 
@@ -81,11 +122,15 @@
             />
 
         <TextView
+            android:textSize="8sp"
+
+
             android:id="@+id/tv_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
+
             android:layout_marginRight="20dp"
             android:gravity="start"
 
@@ -93,11 +138,15 @@
            />
 
         <TextView
+            android:textSize="8sp"
+
+
             android:id="@+id/tv_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
+
             android:layout_marginRight="20dp"
             android:gravity="start"
             android:textColor="@color/content_gray"
@@ -106,36 +155,23 @@
             app:layout_constraintRight_toLeftOf="@+id/gl_two" />
 
         <TextView
+            android:textSize="8sp"
+
             android:id="@+id/tv_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
+
             android:layout_marginRight="20dp"
 
             android:gravity="start"
             android:textColor="@color/content_gray"
          />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_verify"
-            android:layout_width="match_parent"
 
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/store_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="(华都店)"
-        android:textColor="@color/content_gray"
-        android:padding="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/gl_horizontal" />
+
 
 
 
