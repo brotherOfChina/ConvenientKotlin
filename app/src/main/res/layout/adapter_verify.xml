@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="6dp"
+    android:padding="6dp"
     android:orientation="horizontal">
 
     <TextView
@@ -10,10 +11,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-
-
         android:textColor="@color/content_gray"
-        android:textSize="8sp"
+        android:textSize="12sp"
         />
 
     <TextView
@@ -23,7 +22,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:textColor="@color/content_gray"
-        android:textSize="8sp"
+        android:textSize="12sp"
         />
 
     <TextView
@@ -35,6 +34,6 @@
         android:layout_weight="0.5"
         android:gravity="end"
         android:textColor="@color/content_gray"
-        android:textSize="8sp"
+        android:textSize="12sp"
         />
 </LinearLayout>

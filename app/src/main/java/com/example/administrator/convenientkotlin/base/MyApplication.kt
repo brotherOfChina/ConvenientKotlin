@@ -3,7 +3,6 @@ package com.example.administrator.convenientkotlin.base
 import android.app.Application
 import android.util.Log
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
-import com.example.administrator.convenientkotlin.utils.CrashHandlerUtil
 import com.videogo.openapi.EZOpenSDK
 import com.vise.log.ViseLog
 import com.vise.log.inner.LogcatTree
@@ -23,7 +22,7 @@ class MyApplication : Application() {
     fun getApplication():Application = instance
     override fun onCreate() {
         super.onCreate()
-        CrashHandlerUtil.getInstance().init(this)
+//        CrashHandlerUtil.getInstance().init(this)
         /**
          * sdk日志开关，正式发布需要去掉
          */
@@ -40,7 +39,7 @@ class MyApplication : Application() {
         instance = this
         ViseHttp.init(instance)
         ViseLog.getLogConfig()
-                .configAllowLog(true)//是否输出日志
+                .configAllowLog(false)//是否输出日志
                 .configShowBorders(true)//是否排版显示
                 .configTagPrefix("zpj")//设置标签前缀
                 .configFormatTag("%d{HH:mm:ss:SSS} %t %c{-5}")//个性化设置标签，默认显示包名

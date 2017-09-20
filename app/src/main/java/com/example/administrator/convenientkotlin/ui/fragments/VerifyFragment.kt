@@ -5,10 +5,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import com.example.administrator.convenientkotlin.R
+import com.example.administrator.convenientkotlin.base.MyApplication
 import com.example.administrator.convenientkotlin.domain.commands.HttpResult
 import com.example.administrator.convenientkotlin.domain.model.VerifyOrderBean
+import com.example.administrator.convenientkotlin.extensions.DelegatesExt
 import com.example.administrator.convenientkotlin.extensions.hidePhone
-import com.example.administrator.convenientkotlin.ui.activities.MainActivity
+import com.example.administrator.convenientkotlin.ui.activities.UserActivity
 import com.example.administrator.convenientkotlin.ui.adapters.VerifyAdapter
 import com.example.administrator.convenientkotlin.utils.SignUtil
 import com.google.gson.Gson
@@ -25,6 +27,9 @@ import org.json.JSONObject
  * 验证单fragment
  */
 class VerifyFragment : BaseFragment() {
+    val m_user_id :String by DelegatesExt.preference(MyApplication.instance, UserActivity.USER_ID, UserActivity.D_USER_ID)
+    val m_user_name :String by DelegatesExt.preference(MyApplication.instance,UserActivity.USER_NAME, UserActivity.D_USER_NAME)
+
     override fun bindEvent() {
     }
 
@@ -53,10 +58,9 @@ class VerifyFragment : BaseFragment() {
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //&&s.subSequence(0,3).toString().equals("0715")
                 if (s?.length == 18) {
-                    requestVerify(s.toString(),MainActivity.user_id )
-
+                    requestVerify(s.toString(),m_user_id )
+                    ViseLog.i(m_user_id+"==="+m_user_name)
                 }
-
             }
 
         })
@@ -72,10 +76,11 @@ class VerifyFragment : BaseFragment() {
         map.put("audit_userid", user_id)
         map.put("sign", SignUtil.getSignString(map))
         ViseLog.i(map)
+
         ViseHttp.POST().addParams(map)
                 .request(object : ACallback<String>() {
                     override fun onSuccess(data: String) {
-
+                        et_verify_num.setText("")
                         val httpResult = HttpResult()
                         val jo = JSONObject(data)
                         httpResult.status = jo.optInt("status")
@@ -86,8 +91,39 @@ class VerifyFragment : BaseFragment() {
                             ViseLog.d(httpResult.response)
 
                             val result = Gson().fromJson(httpResult.response.toString(), VerifyOrderBean::class.java)
+//                            val result = Gson().fromJson("{\n" +
+//                                    "        \"audit_store_id\": \"1\",\n" +
+//                                    "        \"audit_userid\": 581,\n" +
+//                                    "        \"order_type\": \"1\",\n" +
+//                                    "        \"order_no\": \"2017092016113571243224\",\n" +
+//                                    "        \"store_id\": \"1\",\n" +
+//                                    "        \"userid\": \"12010\",\n" +
+//                                    "        \"username\": \"18404975605\",\n" +
+//                                    "        \"goods_data\": [\n" +
+//                                    "            {\n" +
+//                                    "                \"item_id\": \"2305\",\n" +
+//                                    "                \"item_status\": \"1\",\n" +
+//                                    "                \"store_id\": \"1\",\n" +
+//                                    "                \"goods_id\": \"1381\",\n" +
+//                                    "                \"goods_sn\": \"2001934\",\n" +
+//                                    "                \"goods_name\": \"统一阿萨姆原味奶茶500ml\",\n" +
+//                                    "                \"goods_price\": \"3.99\",\n" +
+//                                    "                \"goods_sett_price\": \"3.99\",\n" +
+//                                    "                \"goods_img\": \"/a1/4a/10/2b/db/d0647800a5b58e951790b1.png\",\n" +
+//                                    "                \"goods_num\": \"1\",\n" +
+//                                    "                \"lock_stock\": \"0\"\n" +
+//                                    "            }\n" +
+//                                    "        ],\n" +
+//                                    "        \"coupon_data\": {\n" +
+//                                    "            \"coupon_type\": \"0\",\n" +
+//                                    "            \"full_amount\": \"0.00\",\n" +
+//                                    "            \"reduce_amount\": \"0.00\"\n" +
+//                                    "        },\n" +
+//                                    "        \"total_num\": 1,\n" +
+//                                    "        \"total_amount\": \"3.99\",\n" +
+//                                    "        \"ctime\": \"2017-09-20 16:13:37\"\n" +
+//                                    "    }", VerifyOrderBean::class.java)
                             rl_verified.visibility=View.VISIBLE
-
                             rl_verify.visibility=View.INVISIBLE
                             if (result != null) {
                                 val adapter: VerifyAdapter by lazy {
@@ -125,6 +161,8 @@ class VerifyFragment : BaseFragment() {
 
                     }
                     override fun onFail(errCode: Int, errMsg: String) {
+//                        dialog.dismiss()
+                        et_verify_num.setText("")
                         ViseLog.i("$errCode+$errMsg")
                     }
                 })

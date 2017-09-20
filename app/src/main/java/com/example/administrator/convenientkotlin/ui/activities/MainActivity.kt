@@ -1,5 +1,6 @@
 package com.example.administrator.convenientkotlin.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -8,9 +9,11 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import com.example.administrator.convenientkotlin.R
+import com.example.administrator.convenientkotlin.base.MyApplication
 import com.example.administrator.convenientkotlin.domain.model.BuyData
 import com.example.administrator.convenientkotlin.domain.model.NavBean
 import com.example.administrator.convenientkotlin.domain.model.ResponseNavBean
+import com.example.administrator.convenientkotlin.extensions.DelegatesExt
 import com.example.administrator.convenientkotlin.extensions.hidePhone
 import com.example.administrator.convenientkotlin.ui.adapters.FrgmentAdapter
 import com.example.administrator.convenientkotlin.ui.adapters.NavAdapter
@@ -31,10 +34,10 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
-    companion object {
-        var user_id = "64259"
-        var store_id = "1"
-    }
+    val m_store_id :String by DelegatesExt.preference(MyApplication.instance,UserActivity.STORE_ID, UserActivity.D_STORE_ID)
+    val m_store_name :String by DelegatesExt.preference(MyApplication.instance,UserActivity.STORE_NAME, UserActivity.D_STORE_NAME)
+
+
 
     override fun bindEvent() {
 
@@ -84,8 +87,10 @@ class MainActivity : BaseActivity() {
             ListDialog(this, names)
         }
         store_name.setOnClickListener {
-            storeDialog.show()
-            ViseLog.i(user_id)
+//            storeDialog.show()
+
+//            ViseLog.i(user_id)
+            startActivity(Intent(this@MainActivity,UserActivity::class.java))
         }
         val fragmentList = listOf<Fragment>(
                 RXFragment(), TypeFragment(), GoodsFragment(), VerifyFragment()
@@ -97,7 +102,7 @@ class MainActivity : BaseActivity() {
 
     fun getBuyData(store_id: String) {
         val currentTime = System.currentTimeMillis() / 1000
-
+        val startTime = System.currentTimeMillis() / 1000-24*60*60
         /**
          * v:CV1
         m:Order
@@ -116,12 +121,12 @@ class MainActivity : BaseActivity() {
         map.put("c", "List")
         map.put("store_id", store_id)
         map.put("rec_type", "1")
-        map.put("s_time", "1499999520")
+        map.put("s_time", "$startTime")
         map.put("e_time", "$currentTime")
         map.put("page", "1")
         map.put("perpage", "10")
         map.put("sign", SignUtil.getSignString(map))
-        ViseLog.i(map)
+//        ViseLog.i(map)
         ViseHttp.POST().addParams(map).request(object : ACallback<BuyData>() {
             override fun onSuccess(data: BuyData?) {
                 ViseLog.i(data)
@@ -148,7 +153,7 @@ class MainActivity : BaseActivity() {
                 }).subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
-                            getBuyData(MainActivity.store_id)
+                            getBuyData(m_store_id)
                         })
             }
 
@@ -159,7 +164,6 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initData() {
-        getBuyData(MainActivity.store_id)
 
     }
 
@@ -181,6 +185,8 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        store_name.text=m_store_name
     }
 
 }

@@ -37,3 +37,5 @@ data class YsyBean(val code:String,
                    val data:YsyDataBean)
 data class YsyDataBean(val accessToken:String,
                        val expireTime:String)
+data class User(val userid: String,val truename:String)
+data class Store(val store_id:String,val  store_name:String)

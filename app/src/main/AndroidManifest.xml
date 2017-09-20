@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    1
 
     <application
         android:name=".base.MyApplication"
@@ -57,9 +59,15 @@
             android:name=".ui.activities.PlayActivity"
             android:label="播放界面"
             android:screenOrientation="landscape" />
-        <activity android:name=".ui.activities.LensActivity"
-            android:screenOrientation="landscape"
-            android:label="摄像头界面"/>
+        <activity
+            android:name=".ui.activities.LensActivity"
+            android:label="摄像头界面"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ui.activities.UserActivity"
+            android:label="选择店铺界面"
+            android:screenOrientation="landscape" />
+
+
     </application>
 
 </manifest>

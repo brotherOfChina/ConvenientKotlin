@@ -28,14 +28,14 @@ class ListDialog( val fragment: MainActivity, private val maps:  Map<String,Stri
         lv_name.setOnItemClickListener { _, _, i, _ ->
             fragment.store_name.text=names[i]
             when(names[i]){
-                "华都店" -> MainActivity.store_id="1"
-                "迎宾西街店" -> MainActivity.store_id="6"
-                "颐景店" -> MainActivity.store_id="2"
-                "东阳店" -> MainActivity.store_id="3"
-                "新华店" -> MainActivity.store_id="5"
-                "蕴华店" -> MainActivity.store_id="7"
+//                "华都店" -> MainActivity.store_id="1"
+//                "迎宾西街店" -> MainActivity.store_id="6"
+//                "颐景店" -> MainActivity.store_id="2"
+//                "东阳店" -> MainActivity.store_id="3"
+//                "新华店" -> MainActivity.store_id="5"
+//                "蕴华店" -> MainActivity.store_id="7"
             }
-            MainActivity.user_id=user_ids[i]
+//            MainActivity.user_id=user_ids[i]
             dismiss()
         }
         setCanceledOnTouchOutside(true)
