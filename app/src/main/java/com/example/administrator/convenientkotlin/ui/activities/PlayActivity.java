@@ -47,7 +47,7 @@ public class PlayActivity extends AppCompatActivity implements EZUIPlayer.EZUIPl
         setContentView(R.layout.activity_play);
         cameraInfo = getIntent().getParcelableExtra("cameraNo");
         url = "ezopen://open.ys7.com/" + cameraInfo.getDeviceSerial() + "/" + cameraInfo.getCameraNo() + "." + "hd.live";
-        ezuiPlayer = findViewById(R.id.play);
+        ezuiPlayer = (EZUIPlayer) findViewById(R.id.play);
         mOrientationDetector = new MyOrientationDetector(this);
 
         mBtnPlay = (Button) findViewById(R.id.btn_play);

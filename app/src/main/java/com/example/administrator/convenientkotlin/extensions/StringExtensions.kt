@@ -32,3 +32,13 @@ fun String.getQRCode( format: BarcodeFormat=BarcodeFormat.QR_CODE):Bitmap{
 }
 fun String.hidePhone():String =
         this.substring(0, 3) + "****" + this.substring(7, this.length)
+fun String.getName():String{
+    return try {
+        val start=this.indexOf("（")
+        val end=this.indexOf("）")
+        this.substring(start+1,end)
+    }catch (e:Exception){
+        this
+    }
+
+}

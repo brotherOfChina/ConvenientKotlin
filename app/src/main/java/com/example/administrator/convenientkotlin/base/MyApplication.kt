@@ -39,7 +39,7 @@ class MyApplication : Application() {
         instance = this
         ViseHttp.init(instance)
         ViseLog.getLogConfig()
-                .configAllowLog(false)//是否输出日志
+                .configAllowLog(true)//是否输出日志
                 .configShowBorders(true)//是否排版显示
                 .configTagPrefix("zpj")//设置标签前缀
                 .configFormatTag("%d{HH:mm:ss:SSS} %t %c{-5}")//个性化设置标签，默认显示包名

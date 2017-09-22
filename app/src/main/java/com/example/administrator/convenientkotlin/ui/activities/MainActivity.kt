@@ -14,6 +14,7 @@ import com.example.administrator.convenientkotlin.domain.model.BuyData
 import com.example.administrator.convenientkotlin.domain.model.NavBean
 import com.example.administrator.convenientkotlin.domain.model.ResponseNavBean
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
+import com.example.administrator.convenientkotlin.extensions.getName
 import com.example.administrator.convenientkotlin.extensions.hidePhone
 import com.example.administrator.convenientkotlin.ui.adapters.FrgmentAdapter
 import com.example.administrator.convenientkotlin.ui.adapters.NavAdapter
@@ -32,6 +33,7 @@ import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 class MainActivity : BaseActivity() {
     val m_store_id :String by DelegatesExt.preference(MyApplication.instance,UserActivity.STORE_ID, UserActivity.D_STORE_ID)
@@ -102,7 +104,7 @@ class MainActivity : BaseActivity() {
 
     fun getBuyData(store_id: String) {
         val currentTime = System.currentTimeMillis() / 1000
-        val startTime = System.currentTimeMillis() / 1000-24*60*60
+        val startTime = System.currentTimeMillis() / 1000-24*60*60*7
         /**
          * v:CV1
         m:Order
@@ -126,7 +128,7 @@ class MainActivity : BaseActivity() {
         map.put("page", "1")
         map.put("perpage", "10")
         map.put("sign", SignUtil.getSignString(map))
-//        ViseLog.i(map)
+        ViseLog.i(map)
         ViseHttp.POST().addParams(map).request(object : ACallback<BuyData>() {
             override fun onSuccess(data: BuyData?) {
                 ViseLog.i(data)
@@ -135,7 +137,7 @@ class MainActivity : BaseActivity() {
                         val ll_content: View by lazy {
                             View.inflate(mContext, R.layout.adapter_flipper, null)
                         }
-                        val tv = ll_content.findViewById<TextView>(R.id.tv_data)
+                        val tv:TextView = ll_content.findViewById(R.id.tv_data) as TextView
                         var s = StringBuffer()
                         for (item in bean.items) {
                             s = s.append("“" + item.goods_name + "”*" + item.goods_num)
@@ -148,7 +150,7 @@ class MainActivity : BaseActivity() {
                     vp_buy_data.startFlipping()
                 }
                 Observable.create(ObservableOnSubscribe<Int> { emitter ->
-                    Thread.sleep(60000)
+                    Thread.sleep(60000*10)
                     emitter.onNext(1)
                 }).subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -158,7 +160,15 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onFail(errCode: Int, errMsg: String?) {
-//                toast(errMsg)
+                Observable.create(ObservableOnSubscribe<Int> { emitter ->
+                    Thread.sleep(60000*10)
+                    emitter.onNext(1)
+                }).subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            getBuyData(m_store_id)
+                        })
+                toast(errMsg+"")
             }
         })
     }
@@ -179,14 +189,14 @@ class MainActivity : BaseActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
         rv_nav.layoutManager = LinearLayoutManager(this)
-
+//        getBuyData(m_store_id)
 
     }
 
     override fun onResume() {
         super.onResume()
-
-        store_name.text=m_store_name
+        getBuyData(m_store_id)
+        store_name.text=m_store_name.getName()
     }
 
 }

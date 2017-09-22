@@ -8,6 +8,7 @@ import android.view.WindowManager
 
 /**
  * Created by Administrator on 2017/9/20 0020.
+ * 基础类
  */
 abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {

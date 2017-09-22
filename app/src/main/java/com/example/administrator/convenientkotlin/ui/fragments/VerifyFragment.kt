@@ -9,6 +9,7 @@ import com.example.administrator.convenientkotlin.base.MyApplication
 import com.example.administrator.convenientkotlin.domain.commands.HttpResult
 import com.example.administrator.convenientkotlin.domain.model.VerifyOrderBean
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
+import com.example.administrator.convenientkotlin.extensions.getName
 import com.example.administrator.convenientkotlin.extensions.hidePhone
 import com.example.administrator.convenientkotlin.ui.activities.UserActivity
 import com.example.administrator.convenientkotlin.ui.adapters.VerifyAdapter
@@ -29,6 +30,7 @@ import org.json.JSONObject
 class VerifyFragment : BaseFragment() {
     val m_user_id :String by DelegatesExt.preference(MyApplication.instance, UserActivity.USER_ID, UserActivity.D_USER_ID)
     val m_user_name :String by DelegatesExt.preference(MyApplication.instance,UserActivity.USER_NAME, UserActivity.D_USER_NAME)
+    val m_store_name :String by DelegatesExt.preference(MyApplication.instance,UserActivity.STORE_NAME, UserActivity.D_STORE_NAME)
 
     override fun bindEvent() {
     }
@@ -37,6 +39,11 @@ class VerifyFragment : BaseFragment() {
         et_verify_num.requestFocus()
     }
 
+    override fun onResume() {
+        super.onResume()
+        tv_title.text=m_store_name.getName()
+        tv_title_.text=m_store_name.getName()
+    }
     override fun getLayoutID(): Int = R.layout.fragment_verify
 
     override fun processClick(view: View?) {
@@ -123,8 +130,10 @@ class VerifyFragment : BaseFragment() {
 //                                    "        \"total_amount\": \"3.99\",\n" +
 //                                    "        \"ctime\": \"2017-09-20 16:13:37\"\n" +
 //                                    "    }", VerifyOrderBean::class.java)
+                            rl_verify.visibility=View.GONE
+
                             rl_verified.visibility=View.VISIBLE
-                            rl_verify.visibility=View.INVISIBLE
+                            iv_waves.visibility=View.VISIBLE
                             if (result != null) {
                                 val adapter: VerifyAdapter by lazy {
                                     VerifyAdapter(result.goods_data)
@@ -153,6 +162,8 @@ class VerifyFragment : BaseFragment() {
                             activity.toast(httpResult.status.toString() + httpResult.msg + "")
                         }
                         tv_sure.setOnClickListener {
+                            iv_waves.visibility=View.GONE
+
                             tv_sure.visibility=View.INVISIBLE
                             rl_verify.visibility=View.VISIBLE
                             rl_verified.visibility=View.INVISIBLE
