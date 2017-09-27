@@ -142,7 +142,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="83.5dp"
             android:src="@drawable/iv_title" />
 
@@ -294,6 +294,7 @@
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:visibility="gone"
+        android:scaleType="fitXY"
         android:layout_alignParentBottom="true"
         android:src="@drawable/iv_waves"
         android:layout_marginBottom="15dp"

@@ -60,8 +60,9 @@ class YSYActivity : BaseActivity() {
     }
 
     private fun loadData() = async(UI) {
+        EZOpenSDK.getInstance().setAccessToken("at.6jota6qx699vutle2jwam14scxtiylqc-9rgk0you04-0cbo99c-laufedsbj")
         val result = bg {
-            EZOpenSDK.getInstance().getDeviceList(0, 10)
+            EZOpenSDK.getInstance().getDeviceList(0, 20)
         }
         updateUI(result.await())
     }

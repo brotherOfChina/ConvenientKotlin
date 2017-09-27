@@ -45,7 +45,7 @@
     <color name="unopen">#748dac</color>
     <!-- scan color -->
     <color name="viewfinder_frame">#929292</color>
-    <color name="viewfinder_laser">#fe5600</color>
+    <color name="viewfinder_laser">#ff5a1e</color>
     <color name="viewfinder_mask">#000000</color>
     <color name="result_view">#b0000000</color>
     <color name="possible_result_points">#c0ffff00</color>

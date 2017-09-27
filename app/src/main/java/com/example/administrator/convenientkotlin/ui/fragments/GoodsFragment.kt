@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_goods.*
  * 商品fragment
  */
 class GoodsFragment : BaseFragment(), GoodsResult<ResponseBean<GoodBean>> {
+
     override fun onGoodsResult(result: ResponseBean<GoodBean>) {
         val adapter: GoodsAdapter by lazy {
             GoodsAdapter(result.data.list) {

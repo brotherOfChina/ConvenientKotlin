@@ -35,7 +35,6 @@ class LensActivity : BaseActivity() {
         //取消状态栏
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_ysy)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lens)
         rv_lens.layoutManager= GridLayoutManager(this,4)

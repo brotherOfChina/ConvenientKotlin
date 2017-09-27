@@ -128,6 +128,7 @@ public class PlayActivity extends AppCompatActivity implements EZUIPlayer.EZUIPl
     private void preparePlay(String accessToken) {
         //设置授权accesstoken
         EZUIKit.setAccessToken(accessToken);
+
         //appkey初始化
         EZUIKit.initWithAppKey(this.getApplication(), "16c4d77101c8406c8a207b0dd339839c");
 
@@ -178,8 +179,9 @@ public class PlayActivity extends AppCompatActivity implements EZUIPlayer.EZUIPl
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         ezuiPlayer.releasePlayer();
+        super.onDestroy();
+
     }
 
 
@@ -198,6 +200,7 @@ public class PlayActivity extends AppCompatActivity implements EZUIPlayer.EZUIPl
                 ezuiPlayer.startPlay();
             }
         } else if (view == mBtnBack) {
+            ezuiPlayer.stopPlay();
             finish();
         }
     }

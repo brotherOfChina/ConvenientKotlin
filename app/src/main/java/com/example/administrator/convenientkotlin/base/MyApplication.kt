@@ -3,6 +3,8 @@ package com.example.administrator.convenientkotlin.base
 import android.app.Application
 import android.util.Log
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
+import com.iflytek.cloud.SpeechConstant
+import com.iflytek.cloud.SpeechUtility
 import com.videogo.openapi.EZOpenSDK
 import com.vise.log.ViseLog
 import com.vise.log.inner.LogcatTree
@@ -38,6 +40,7 @@ class MyApplication : Application() {
         EZOpenSDK.initLib(this, "16c4d77101c8406c8a207b0dd339839c", "");
         instance = this
         ViseHttp.init(instance)
+        SpeechUtility.createUtility(instance, SpeechConstant.APPID + "=59a0d001")
         ViseLog.getLogConfig()
                 .configAllowLog(true)//是否输出日志
                 .configShowBorders(true)//是否排版显示

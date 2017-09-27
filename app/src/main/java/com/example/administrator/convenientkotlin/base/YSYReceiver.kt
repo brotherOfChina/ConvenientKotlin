@@ -18,7 +18,8 @@ class YSYReceiver : BroadcastReceiver(){
 
         if(TextUtils.equals(intent?.action,"com.videogo.action.OAUTH_SUCCESS_ACTION")){
             val accessToken:EZAccessToken=EZOpenSDK.getInstance().ezAccessToken
-            ViseLog.i(accessToken)
+            EZOpenSDK.getInstance().ezAccessToken.accessToken=accessToken.accessToken
+            ViseLog.i(accessToken.accessToken)
             val sayHelloIntent = Intent(context, YSYActivity::class.java)
             sayHelloIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             sayHelloIntent.putExtra("accessToken",accessToken.toString())
