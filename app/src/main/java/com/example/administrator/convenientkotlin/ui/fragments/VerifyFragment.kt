@@ -117,6 +117,10 @@ class VerifyFragment : BaseFragment() {
         })
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        et_verify_num.requestFocus()
+    }
     private fun requestVerify(num: String, user_id: String) {
         var s: String
         val map = mutableMapOf<String, String>()
@@ -269,6 +273,7 @@ class VerifyFragment : BaseFragment() {
                             rl_verify.visibility=View.VISIBLE
                             rl_verified.visibility=View.INVISIBLE
                             et_verify_num.setText("")
+                            et_verify_num.requestFocus()
                         }
 
                     }
