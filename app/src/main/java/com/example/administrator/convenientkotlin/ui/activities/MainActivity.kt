@@ -10,9 +10,8 @@ import android.view.WindowManager
 import android.widget.TextView
 import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.base.MyApplication
-import com.example.administrator.convenientkotlin.domain.model.BuyData
-import com.example.administrator.convenientkotlin.domain.model.NavBean
-import com.example.administrator.convenientkotlin.domain.model.ResponseNavBean
+import com.example.administrator.convenientkotlin.data.Server.UpdataService
+import com.example.administrator.convenientkotlin.domain.model.*
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
 import com.example.administrator.convenientkotlin.extensions.getName
 import com.example.administrator.convenientkotlin.extensions.hidePhone
@@ -33,12 +32,13 @@ import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.toast
 
 class MainActivity : BaseActivity() {
     val m_store_id :String by DelegatesExt.preference(MyApplication.instance,UserActivity.STORE_ID, UserActivity.D_STORE_ID)
     val m_store_name :String by DelegatesExt.preference(MyApplication.instance,UserActivity.STORE_NAME, UserActivity.D_STORE_NAME)
-
+    val version="2"
 
 
     override fun bindEvent() {
@@ -50,7 +50,6 @@ class MainActivity : BaseActivity() {
         map.put("v", "CV1")
 
         map.put("sign", SignUtil.getSignString(map))
-        ViseLog.i(map)
         ViseHttp.POST().addParams(map)
                 .request(object : ACallback<ResponseNavBean<NavBean>>() {
                     override fun onSuccess(data: ResponseNavBean<NavBean>?) {
@@ -72,7 +71,33 @@ class MainActivity : BaseActivity() {
                     }
 
                 })
+    }
 
+    private fun requestUpdate() {
+        val map = mutableMapOf<String, String>()
+        map.put("app", "Index")
+        map.put("class", "Chkvison")
+        map.put("sign", "123456")
+        map.put("type", "bldApp")
+        map.put("vison", version)
+        ViseHttp.POST().baseUrl("http://www.jinxiangqizhong.com/api/").addParams(map).request(object : ACallback<ResponseData<Version>>() {
+            override fun onFail(errCode: Int, errMsg: String?) {
+            }
+
+            override fun onSuccess(data: ResponseData<Version>) {
+
+                if (data.status=="1"){
+                    bg {
+                        val url=data.data.url
+                        ViseLog.d(data.data.url)
+                        val  updateService=Intent(this@MainActivity, UpdataService::class.java)
+                        updateService.putExtra("downloadurl", url)
+                        startService(updateService) }
+
+                }
+
+            }
+        })
     }
 
     override fun initView() {
@@ -128,10 +153,8 @@ class MainActivity : BaseActivity() {
         map.put("page", "1")
         map.put("perpage", "10")
         map.put("sign", SignUtil.getSignString(map))
-        ViseLog.i(map)
         ViseHttp.POST().addParams(map).request(object : ACallback<BuyData>() {
             override fun onSuccess(data: BuyData?) {
-                ViseLog.i(data)
                 if (data?.status == 0) {
                     for (bean in data.data.list) {
                         val ll_content: View by lazy {
@@ -189,6 +212,8 @@ class MainActivity : BaseActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
         rv_nav.layoutManager = LinearLayoutManager(this)
+        requestUpdate()
+
 //        getBuyData(m_store_id)
 
     }

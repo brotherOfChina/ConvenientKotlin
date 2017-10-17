@@ -9,7 +9,6 @@ import com.example.administrator.convenientkotlin.ui.activities.LensActivity
 import com.example.administrator.convenientkotlin.ui.adapters.DeviceAdapter
 import com.videogo.openapi.EZOpenSDK
 import com.videogo.openapi.bean.EZDeviceInfo
-import com.vise.log.ViseLog
 import com.vise.xsnow.http.ViseHttp
 import com.vise.xsnow.http.callback.ACallback
 import com.vise.xsnow.ui.BaseFragment
@@ -62,7 +61,6 @@ class RXFragment :BaseFragment(){
         val result = bg {
             EZOpenSDK.getInstance().getDeviceList(0, 20)
         }
-        ViseLog.i(result.await()[0]?.cameraInfoList)
         updateUI(result.await())
     }
 

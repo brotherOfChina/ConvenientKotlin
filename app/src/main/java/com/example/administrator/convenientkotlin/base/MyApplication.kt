@@ -2,13 +2,11 @@ package com.example.administrator.convenientkotlin.base
 
 import android.app.Application
 import android.content.Context
+import android.support.multidex.MultiDex
 import android.util.Log
-import android.widget.Toast
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
 import com.iflytek.cloud.SpeechConstant
 import com.iflytek.cloud.SpeechUtility
-import com.taobao.sophix.PatchStatus
-import com.taobao.sophix.SophixManager
 import com.videogo.openapi.EZOpenSDK
 import com.vise.log.ViseLog
 import com.vise.log.inner.LogcatTree
@@ -16,9 +14,6 @@ import com.vise.utils.assist.SSLUtil
 import com.vise.xsnow.http.ViseHttp
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-
-
-
 /**
  * Created by Administrator on 2017/8/29 0029.
  * APP
@@ -29,12 +24,13 @@ class MyApplication : Application() {
     }
     fun getApplication():Application = instance
     override fun attachBaseContext(base: Context?) {
+        MultiDex.install(base);
         super.attachBaseContext(base)
-        initSophix()
+
     }
     override fun onCreate() {
         super.onCreate()
-        SophixManager.getInstance().queryAndLoadNewPatch()
+//        SophixManager.getInstance().queryAndLoadNewPatch()
 //        CrashHandlerUtil.getInstance().init(this)
         /**
          * sdk日志开关，正式发布需要去掉
@@ -116,21 +112,6 @@ class MyApplication : Application() {
         //                .proxy(new Proxy(Proxy.Type.HTTP, new SocketAddress() {}))
     }
 
-    private fun initSophix() {
-        SophixManager.getInstance().setContext(this)
-                .setAppVersion("1.0.1")
-                .setAesKey(null)
-                .setEnableDebug(true)
-                .setPatchLoadStatusStub { mode, code, info, handlePatchVersion ->
-                    // 补丁加载回调通知
-                    if (code == PatchStatus.CODE_LOAD_SUCCESS) {
-                        Toast.makeText(this, "加载成功", Toast.LENGTH_SHORT).show();
-                    } else if (code == PatchStatus.CODE_LOAD_RELAUNCH) {
-                        Toast.makeText(this, "加载成功，需要重启", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // 其它错误信息, 查看PatchStatus类说明
-                    }
-                }.initialize()
-    }
+
 
 }

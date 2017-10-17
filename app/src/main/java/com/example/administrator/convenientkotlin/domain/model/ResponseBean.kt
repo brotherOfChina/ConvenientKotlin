@@ -7,7 +7,8 @@ package com.example.administrator.convenientkotlin.domain.model
  */
 data class ResponseBean< T>(val status: Int, val msg: String, val data: DataBean<T>)
 data class ResponseNavBean< T>(val status: Int, val msg: String, val data: List<T>)
-data class ResponseDataBean(val status: Int, val msg: String, val data: VerifyOrderBean)
+data class ResponseDataBean<T>(val status: Int, val msg: String, val data: T)
+data class ResponseData<T>(val status: String, val msg: String, val data: T)
 
 data class NavBean(val internal: String,
                    val nav_id: String,
@@ -39,3 +40,4 @@ data class YsyDataBean(val accessToken:String,
                        val expireTime:String)
 data class User(val userid: String,val truename:String)
 data class Store(val store_id:String,val  store_name:String)
+data class Version(val url:String)

@@ -19,8 +19,6 @@ class LensActivity : BaseActivity() {
 
     override fun initView() {
 
-
-
     }
 
     override fun initData() {

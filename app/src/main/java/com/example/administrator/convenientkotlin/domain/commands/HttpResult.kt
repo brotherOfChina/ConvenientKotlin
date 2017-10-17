@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 /**
- * Created by 黄剑俊 on 2017/4/17.
+ *
  *
  * 对请求结果返回对象的封装，包含[.status]， [.msg]
  * 和[.response]

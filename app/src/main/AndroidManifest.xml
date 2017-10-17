@@ -5,16 +5,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     1
-
     <application
         android:name=".base.MyApplication"
         android:allowBackup="true"
@@ -32,6 +30,7 @@
         <meta-data
             android:name="com.taobao.android.hotfix.RSASECRET"
             android:value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCy2lAlwmDCNSEIvOAu0qALxB9sWnYqBaeRGSwa1IBYDnZsSLXiya83t8j9kcWGW2CAtJ6FsxrZRFumPlB/aXf71I201HwkFgoC6slEkyzGi/DKJppLOqtIL4uvrezEhqboKKhkkOcfOJtUnvzkQDfwQ6npFBVjS57xZaGOkrsHeWzetmT4kl/kbGxeQ4rumYVD3VyC//Wx/j/LttzbEeZTMWex+xht6uU7zPD+z549OKX8vIhgixNpoFlUBfvpAkTAL4khqaHazESK0XZXXhdX7VCELpGYZpl/d7iTPeiRMR4yVt5e2WRe2VynMJ9ixW5vtI6dRhsrUh5eqG9FlmYTAgMBAAECggEAQfHEw2dcDb9RIsuhTSJT6IKzo1vnXa8gDZveazYW7GDIwTw99BSxCjY1YWkyD0v51PrDyEA1kg5mTHGFdLUKjEvew+Hks9l8b37qHuK1C6/lZGO/WCWVqdP+CRRzzDJpsAftrsbOsPBKNXU5gV88QNZx+4JwMGBdhlwWqV7onuREsodJ4fjNS1HH7J2rCpzRQF4SSJBGu6jlImWRkBqbStpU0AHtrPPlISMMQxS5RLs0G3DQjRYCd+H4+8Gu3KVr3jtRMNbCchlcmRFp2VxOBzDq5yfRxVHSm1ApbBeb4DJ9EQggh4FeLDG/ulq2v1S379U3ZRP/JpzwpYfqIqEEgQKBgQDZ4OShB3DQMBUX50Jf4FfQcQactCZZE7IfVne7BFK9n/srOFrPoJCLNqMcc+lc/btkl59Td/bU2OOgJw1fBZs/klHjHHYM9hr0TcGehrFU/RFJFjm75yB3uBoEW/7DoogNyZyKM0jokCzB7p5A5m4MqLq832B120Wh8yOcwKyH4wKBgQDSJWZVyl64IYOqFWSsWGAtSgKqjJZov90s1vCF6nNEnHArVHmIrSE0jEJ6mIjPR9Ui+4sBfCa/KOid6KxkHuWYW8TSWFiKwZBmdfP4aoXywUDy9epmcMfDpbB1aQdgWNUUnAiq4Kn6ExJaQ6t8rc0SJRVJr+BuUmvB70NlSVcgEQKBgQCwmD7XYg+HPqGqKTA8Q7sJYMMKOl4mrvcdvVj4RU3HEqdi5Z99UFg37gYQ5sZMMAA2TUq/Panb5RvCUETfMs0dnrwuh4ALi2JXh7qagfOzvhbHlXMgIPrI7nhv9hytdswt2K6/uUer8EfGvGCam+qw6gXJVoh5nkt3M3o28FgnHwKBgA51TkYmxz+J5sIj+Ko25l8XUXmkdJC+apw0KZY9HDMjREBm7nmt17QC1mwS5I7GVW6zucufXBcY3HBI2tuEmK1T2wXR2D2rtaCnCuMTiSW7kBlnO/pSVhwq4Soi0MQbOIXTenEvReKTv1aAg2LvnkVaUc2hESLl/s34BT4JvrnRAoGBAId/0oR3HBFaxNDkYPTIF5UR+1QrO4HcUXhKp2mSkS8xxWAUeB9Qr49ijHTl24ur4HY/ejxmtcmjLqyVet9IGBoBl3ElBRr3KOVqGuwwQeeeF29ISTE4DTqirJkWlM0e/PB61NPIRKfVuKa+duOjrr+A0esOAfga0e6VwD+nYPmo" />
+
         <activity
             android:name=".ui.activities.MainActivity"
             android:screenOrientation="landscape">
@@ -47,7 +46,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
+        <service android:name=".data.Server.UpdataService" />
         <activity
             android:name="com.videogo.main.EzvizWebViewActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -74,11 +73,11 @@
             android:name=".ui.activities.LensActivity"
             android:label="摄像头界面"
             android:screenOrientation="landscape" />
-        <activity android:name=".ui.activities.UserActivity"
+        <activity
+            android:name=".ui.activities.UserActivity"
             android:label="选择店铺界面"
             android:screenOrientation="landscape" />
-
-
+        <activity android:name=".ui.adapters.PlayAdapter"></activity>
     </application>
 
 </manifest>

@@ -136,7 +136,6 @@ public class PlayActivity extends AppCompatActivity implements EZUIPlayer.EZUIPl
         EZUIKit.setDebug(true);
         //设置播放资源参数
         ezuiPlayer.setCallBack(this);
-        ViseLog.i(url);
         ezuiPlayer.setUrl(url);
     }
 
@@ -179,6 +178,7 @@ public class PlayActivity extends AppCompatActivity implements EZUIPlayer.EZUIPl
 
     @Override
     protected void onDestroy() {
+        ezuiPlayer.stopPlay();
         ezuiPlayer.releasePlayer();
         super.onDestroy();
 
