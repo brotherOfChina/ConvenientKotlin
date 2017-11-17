@@ -1,57 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/gl_vertical_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.166"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/gl_vertical_two"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.55"
-        tools:layout_editor_absoluteX="528dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/gl_vertical_three"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.576"
-        tools:layout_editor_absoluteX="553dp"
-        tools:layout_editor_absoluteY="0dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/gl_vertical_four"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.834"
-        tools:layout_editor_absoluteX="801dp"
-        tools:layout_editor_absoluteY="0dp" />
-    <!--horizontal-->
-    <android.support.constraint.Guideline
-        android:id="@+id/gl_horizontal_one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="258dp" />
 
     <TextView
         android:id="@+id/tv_sure"
@@ -68,21 +21,26 @@
         android:text="确 认"
         android:textColor="@color/white"
         android:textSize="14sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        />
 
 
     <RelativeLayout
         android:id="@+id/rl_verify"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/iv_verify"
+        android:layout_width="357dp"
+        android:layout_height="500dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/gl_vertical_one"
-        app:layout_constraintRight_toLeftOf="@+id/gl_vertical_two"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/iv_verify" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -111,35 +69,40 @@
     </RelativeLayout>
 
     <ImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/iv_one"
+        android:layout_width="260dp"
+        android:layout_height="250dp"
+        android:scaleType="fitXY"
+
+        android:layout_toEndOf="@+id/rl_verify"
+        android:layout_toRightOf="@+id/rl_verify"
         android:src="@drawable/sketch_two"
-        app:layout_constraintBottom_toTopOf="@+id/gl_horizontal_one"
-        app:layout_constraintLeft_toLeftOf="@+id/gl_vertical_three"
-        app:layout_constraintRight_toLeftOf="@+id/gl_vertical_four"
-        app:layout_constraintTop_toTopOf="parent" />
+
+        />
 
     <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/iv_two"
+        android:layout_width="260dp"
+        android:layout_height="250dp"
+        android:layout_below="@+id/iv_one"
+        android:scaleType="fitXY"
+        android:layout_toEndOf="@+id/rl_verify"
+        android:layout_toRightOf="@+id/rl_verify"
         android:src="@drawable/sketch_one"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/gl_vertical_three"
-        app:layout_constraintRight_toLeftOf="@+id/gl_vertical_four"
-        app:layout_constraintTop_toTopOf="@+id/gl_horizontal_one" />
+       />
 
 
     <RelativeLayout
         android:id="@+id/rl_verified"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="357dp"
+        android:layout_height="500dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="#ffffff"
-        android:orientation="vertical"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/iv_waves"
-        app:layout_constraintLeft_toLeftOf="@+id/gl_vertical_one"
-        app:layout_constraintRight_toLeftOf="@+id/gl_vertical_two"
-        app:layout_constraintTop_toTopOf="parent">
+        android:visibility="invisible"
+
+        >
 
         <ImageView
             android:layout_width="match_parent"
@@ -212,7 +175,7 @@
             android:id="@+id/cv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/iv_waves"
             android:layout_margin="2dp">
 
             <RelativeLayout
@@ -257,6 +220,7 @@
 
                     android:textColor="@color/content_gray"
                     android:textSize="12sp" />
+
                 <TextView
                     android:id="@+id/tv_amount"
                     android:layout_width="match_parent"
@@ -267,8 +231,7 @@
                     android:gravity="end"
                     android:padding="5dp"
                     android:textColor="#ff5000"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_phone"
@@ -286,20 +249,15 @@
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
+        <ImageView
+            android:id="@+id/iv_waves"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/iv_waves" />
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/iv_waves"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:visibility="gone"
-        android:scaleType="fitXY"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/iv_waves"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/gl_vertical_one"
-        app:layout_constraintRight_toRightOf="@+id/gl_vertical_two" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

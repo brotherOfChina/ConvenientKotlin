@@ -1,17 +1,22 @@
 package com.example.administrator.convenientkotlin.ui.activities
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.base.MyApplication
-import com.example.administrator.convenientkotlin.data.Server.UpdataService
-import com.example.administrator.convenientkotlin.domain.model.*
+import com.example.administrator.convenientkotlin.domain.model.BuyData
+import com.example.administrator.convenientkotlin.domain.model.NavBean
+import com.example.administrator.convenientkotlin.domain.model.ResponseNavBean
+import com.example.administrator.convenientkotlin.domain.model.YsyBean
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
 import com.example.administrator.convenientkotlin.extensions.getName
 import com.example.administrator.convenientkotlin.extensions.hidePhone
@@ -23,6 +28,10 @@ import com.example.administrator.convenientkotlin.ui.fragments.RXFragment
 import com.example.administrator.convenientkotlin.ui.fragments.TypeFragment
 import com.example.administrator.convenientkotlin.ui.fragments.VerifyFragment
 import com.example.administrator.convenientkotlin.utils.SignUtil
+import com.ezvizuikit.open.EZUIError
+import com.ezvizuikit.open.EZUIKit
+import com.ezvizuikit.open.EZUIPlayer
+import com.videogo.openapi.bean.EZDeviceInfo
 import com.vise.log.ViseLog
 import com.vise.xsnow.http.ViseHttp
 import com.vise.xsnow.http.callback.ACallback
@@ -32,14 +41,21 @@ import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.coroutines.experimental.bg
+import org.jetbrains.anko.configuration
 import org.jetbrains.anko.toast
+import java.util.*
 
 class MainActivity : BaseActivity() {
-    val m_store_id :String by DelegatesExt.preference(MyApplication.instance,UserActivity.STORE_ID, UserActivity.D_STORE_ID)
-    val m_store_name :String by DelegatesExt.preference(MyApplication.instance,UserActivity.STORE_NAME, UserActivity.D_STORE_NAME)
-    val version="2"
 
+
+    val m_store_id: String by DelegatesExt.preference(MyApplication.instance, UserActivity.STORE_ID, UserActivity.D_STORE_ID)
+    val m_store_name: String by DelegatesExt.preference(MyApplication.instance, UserActivity.STORE_NAME, UserActivity.D_STORE_NAME)
+    val version = "2"
+    var accessToken: String by DelegatesExt.preference(MyApplication.instance, LensActivity.ACCESS_TOKEN, LensActivity.DEFAULT_ACCESS_TOKEN)
+    var url_top: String by DelegatesExt.preference(MyApplication.instance, LensActivity.URL_Top, LensActivity.DEFAULT_URL_TOP)
+    var url_bottom: String by DelegatesExt.preference(MyApplication.instance, LensActivity.URL_BOTTOM, LensActivity.DEFAULT_URL_BOTTOM)
+    lateinit var ezPlayTop: EZUIPlayer
+    lateinit var ezPlayBottom: EZUIPlayer
 
     override fun bindEvent() {
 
@@ -73,32 +89,7 @@ class MainActivity : BaseActivity() {
                 })
     }
 
-    private fun requestUpdate() {
-        val map = mutableMapOf<String, String>()
-        map.put("app", "Index")
-        map.put("class", "Chkvison")
-        map.put("sign", "123456")
-        map.put("type", "bldApp")
-        map.put("vison", version)
-        ViseHttp.POST().baseUrl("http://www.jinxiangqizhong.com/api/").addParams(map).request(object : ACallback<ResponseData<Version>>() {
-            override fun onFail(errCode: Int, errMsg: String?) {
-            }
 
-            override fun onSuccess(data: ResponseData<Version>) {
-
-                if (data.status=="1"){
-                    bg {
-                        val url=data.data.url
-                        ViseLog.d(data.data.url)
-                        val  updateService=Intent(this@MainActivity, UpdataService::class.java)
-                        updateService.putExtra("downloadurl", url)
-                        startService(updateService) }
-
-                }
-
-            }
-        })
-    }
 
     override fun initView() {
 
@@ -114,10 +105,10 @@ class MainActivity : BaseActivity() {
             ListDialog(this, names)
         }
         store_name.setOnClickListener {
-//            storeDialog.show()
+            //            storeDialog.show()
 
 //            ViseLog.i(user_id)
-            startActivity(Intent(this@MainActivity,UserActivity::class.java))
+            startActivity(Intent(this@MainActivity, UserActivity::class.java))
         }
         val fragmentList = listOf<Fragment>(
                 RXFragment(), TypeFragment(), GoodsFragment(), VerifyFragment()
@@ -129,7 +120,7 @@ class MainActivity : BaseActivity() {
 
     fun getBuyData(store_id: String) {
         val currentTime = System.currentTimeMillis() / 1000
-        val startTime = System.currentTimeMillis() / 1000-24*60*60*7
+        val startTime = System.currentTimeMillis() / 1000 - 24 * 60 * 60 * 7
         /**
          * v:CV1
         m:Order
@@ -160,7 +151,7 @@ class MainActivity : BaseActivity() {
                         val ll_content: View by lazy {
                             View.inflate(mContext, R.layout.adapter_flipper, null)
                         }
-                        val tv:TextView = ll_content.findViewById(R.id.tv_data) as TextView
+                        val tv: TextView = ll_content.findViewById(R.id.tv_data) as TextView
                         var s = StringBuffer()
                         for (item in bean.items) {
                             s = s.append("“" + item.goods_name + "”*" + item.goods_num)
@@ -173,7 +164,7 @@ class MainActivity : BaseActivity() {
                     vp_buy_data.startFlipping()
                 }
                 Observable.create(ObservableOnSubscribe<Int> { emitter ->
-                    Thread.sleep(60000*10)
+                    Thread.sleep(60000 * 10)
                     emitter.onNext(1)
                 }).subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -184,14 +175,14 @@ class MainActivity : BaseActivity() {
 
             override fun onFail(errCode: Int, errMsg: String?) {
                 Observable.create(ObservableOnSubscribe<Int> { emitter ->
-                    Thread.sleep(60000*10)
+                    Thread.sleep(60000 * 10)
                     emitter.onNext(1)
                 }).subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
                             getBuyData(m_store_id)
                         })
-                toast(errMsg+"")
+                toast(errMsg + "")
             }
         })
     }
@@ -203,6 +194,13 @@ class MainActivity : BaseActivity() {
     override fun processClick(view: View?) {
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        setSurfaceSize()
+
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //取消标题
@@ -212,16 +210,154 @@ class MainActivity : BaseActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
         rv_nav.layoutManager = LinearLayoutManager(this)
-        requestUpdate()
+        tv_top_name.setOnClickListener {
+            ViseLog.d("到门口啊")
+            vp_content.currentItem = 0
+        }
+        ezPlayTop = findViewById(R.id.ez_play_top) as EZUIPlayer
+        ezPlayBottom = findViewById(R.id.ez_play_bottom) as EZUIPlayer
+        val map = HashMap<String, String>()
+        map.put("appKey", "16c4d77101c8406c8a207b0dd339839c")
+        map.put("appSecret", "993336fe7aa09017ee9dcd3a10c8c979")
+        ViseHttp.POST().baseUrl("https://open.ys7.com/api/lapp/token/get/").addParams(map)
+                .request(object : ACallback<YsyBean>() {
+                    override fun onSuccess(data: YsyBean) {
+                        accessToken = data.data.accessToken
+                        play()
+                        ViseLog.d("token" + data.data.accessToken)
+                    }
 
+                    override fun onFail(errCode: Int, errMsg: String) {
+
+                    }
+                })
 //        getBuyData(m_store_id)
+        setSurfaceSize()
+    }
 
+    override fun onPause() {
+        super.onPause()
+        ezPlayTop.stopPlay()
+        ezPlayBottom.stopPlay()
+
+    }
+
+    private fun play() {
+
+        EZUIKit.setAccessToken(accessToken)
+
+        //appkey初始化
+        EZUIKit.initWithAppKey(this.application, "16c4d77101c8406c8a207b0dd339839c")
+
+        //设置debug模式，输出log信息
+        EZUIKit.setDebug(true)
+        //设置播放资源参数
+        ezPlayTop.setCallBack(object :EZUIPlayer.EZUIPlayerCallBack {
+            override fun onPlayTime(p0: Calendar?) {
+            }
+
+            override fun onPrepared() {
+                ezPlayTop.startPlay()
+            }
+
+            override fun onVideoSizeChange(p0: Int, p1: Int) {
+                Log.i("zpj","宽："+p0+"高："+p1)
+            }
+
+            override fun onPlayFail(p0: EZUIError?) {
+            }
+
+            override fun onPlaySuccess() {
+            }
+
+            override fun onPlayFinish() {
+                ezPlayTop.stopPlay()
+                ezPlayTop.releasePlayer()
+            }
+
+        })
+        ezPlayTop.setSurfaceSize(600, 0)
+//        ezPlayTop.setUrl("ezopen://open.ys7.com/813756259/11.hd.live")
+        ezPlayBottom.setSurfaceSize(600, 0)
+//        ezPlayBottom.setUrl("ezopen://open.ys7.com/813756259/7.hd.live")
+        ezPlayBottom.setCallBack(object :EZUIPlayer.EZUIPlayerCallBack{
+            override fun onPlayTime(p0: Calendar?) {
+            }
+
+            override fun onPrepared() {
+                ezPlayBottom.startPlay()
+            }
+
+            override fun onVideoSizeChange(p0: Int, p1: Int) {
+            }
+
+            override fun onPlayFail(p0: EZUIError?) {
+            }
+
+            override fun onPlaySuccess() {
+            }
+
+            override fun onPlayFinish() {
+                ezPlayBottom.startPlay()
+                ezPlayBottom.releasePlayer()
+            }
+        })
+        ViseLog.d("url_top:" + url_top)
+
+
+    }
+
+    override fun onStop() {
+        ezPlayTop.stopPlay()
+        ezPlayTop.pausePlay()
+        ezPlayBottom.stopPlay()
+        ezPlayBottom.pausePlay()
+        super.onStop()
+    }
+
+    private fun setSurfaceSize() {
+        val dm = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(dm)
+
+        val isWideScrren = configuration.orientation == Configuration.ORIENTATION_PORTRAIT;
+        ezPlayTop.setSurfaceSize(dm.widthPixels, 0)
+//        val isWideScrren = MyOrientationDetector(this).isWideScrren
+//        //竖屏
+//        if (isWideScrren) {
+//            //竖屏调整播放区域大小，宽全屏，高根据视频分辨率自适应
+//
+//        } else {
+//            //横屏屏调整播放区域大小，宽、高均全屏，播放区域根据视频分辨率自适应
+//            ViseLog.d("widthPixels:"+dm.widthPixels+"heightPixels:"+dm.heightPixels)
+//            ezPlayTop.setSurfaceSize(dm.widthPixels, dm.heightPixels)
+//        }
     }
 
     override fun onResume() {
         super.onResume()
         getBuyData(m_store_id)
-        store_name.text=m_store_name.getName()
+        store_name.text = m_store_name.getName()
+        ezPlayTop.setUrl("ezopen://open.ys7.com/813756259/11.hd.live")
+        ezPlayBottom.setUrl("ezopen://open.ys7.com/813756259/7.hd.live")
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ezPlayTop.stopPlay()
+        ezPlayTop.releasePlayer()
+        ezPlayBottom.stopPlay()
+        ezPlayBottom.releasePlayer()
+    }
+
+
+    lateinit var deviceNames: ArrayList<String>
+    private fun updateUI(devives: List<EZDeviceInfo>) {
+        for (device in devives) {
+            deviceNames.add(device.deviceName)
+        }
+
     }
 
 }

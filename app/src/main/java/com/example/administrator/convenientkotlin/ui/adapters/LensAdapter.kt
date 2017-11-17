@@ -6,11 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.extensions.show
-import com.videogo.openapi.EZOpenSDK
 import com.videogo.openapi.bean.EZCameraInfo
-import com.vise.log.ViseLog
 import kotlinx.android.synthetic.main.adapter_device.view.*
-import org.jetbrains.anko.coroutines.experimental.bg
 
 /**
  * Created by Administrator on 2017/9/12 0012.
@@ -31,13 +28,6 @@ class LensAdapter(val devices: List<EZCameraInfo>, val itemClick:(EZCameraInfo)-
     class ViewHolder(view: View, val itemClick:(EZCameraInfo)->Unit): RecyclerView.ViewHolder(view){
         fun bindView(device: EZCameraInfo){
             with(device){
-                var camera=   bg { EZOpenSDK.getInstance().captureCamera(deviceSerial,cameraNo)
-
-                }
-                 ViseLog.i(camera.toString())
-//                if (camera==null){
-//                    camera=device.cameraCover
-//                }
                 itemView.iv_device.show(device.cameraCover)
                 itemView.tv_device_name.text=cameraName
                 itemView.setOnClickListener { itemClick(this) }

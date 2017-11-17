@@ -14,8 +14,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_goods"
         android:layout_width="match_parent"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginBottom="50dp"
         android:layout_height="match_parent"
 

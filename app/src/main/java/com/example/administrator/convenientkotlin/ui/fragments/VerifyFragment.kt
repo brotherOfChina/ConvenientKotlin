@@ -31,11 +31,11 @@ import org.json.JSONObject
  * 验证单fragment
  */
 class VerifyFragment : BaseFragment() {
-    val m_user_id :String by DelegatesExt.preference(MyApplication.instance, UserActivity.USER_ID, UserActivity.D_USER_ID)
-    val m_user_name :String by DelegatesExt.preference(MyApplication.instance,UserActivity.USER_NAME, UserActivity.D_USER_NAME)
-    val m_store_name :String by DelegatesExt.preference(MyApplication.instance,UserActivity.STORE_NAME, UserActivity.D_STORE_NAME)
-    var isSuccess=true
-    var  mEngineType = SpeechConstant.TYPE_CLOUD;
+    val m_user_id: String by DelegatesExt.preference(MyApplication.instance, UserActivity.USER_ID, UserActivity.D_USER_ID)
+    val m_user_name: String by DelegatesExt.preference(MyApplication.instance, UserActivity.USER_NAME, UserActivity.D_USER_NAME)
+    val m_store_name: String by DelegatesExt.preference(MyApplication.instance, UserActivity.STORE_NAME, UserActivity.D_STORE_NAME)
+    var isSuccess = true
+    var mEngineType = SpeechConstant.TYPE_CLOUD;
     lateinit var mTts: SpeechSynthesizer
 
     override fun bindEvent() {
@@ -47,47 +47,50 @@ class VerifyFragment : BaseFragment() {
     override fun onResume() {
         super.onResume()
         et_verify_num.requestFocus()
-        tv_title.text=m_store_name.getName()
-        tv_title_.text=m_store_name.getName()
-        mTts= SpeechSynthesizer.createSynthesizer(activity, object : InitListener {
-            override fun onInit(code: Int) {
-                isSuccess = code == ErrorCode.SUCCESS
-            }
-        })
-        if (isSuccess){
-            // 清空参数
-            mTts.setParameter(SpeechConstant.PARAMS, null)
-            // 根据合成引擎设置相应参数
-            if (mEngineType == SpeechConstant.TYPE_CLOUD) {
-                mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD)
-                // 设置在线合成发音人
-                mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan")
-                //设置合成语速
-                mTts.setParameter(SpeechConstant.SPEED, "80")
-                //设置合成音调
-                mTts.setParameter(SpeechConstant.PITCH, "50")
-                //设置合成音量
-                mTts.setParameter(SpeechConstant.VOLUME, "50")
-            } else {
-                mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL)
-                // 设置本地合成发音人 voicer为空，默认通过语记界面指定发音人。
-                mTts.setParameter(SpeechConstant.VOICE_NAME, "")
-                /**
-                 * TODO 本地合成不设置语速、音调、音量，默认使用语记设置
-                 * 开发者如需自定义参数，请参考在线合成参数设置
-                 */
-            }
-            //设置播放器音频流类型
-            mTts.setParameter(SpeechConstant.STREAM_TYPE, "3")
-            // 设置播放合成音频打断音乐播放，默认为true
-            mTts.setParameter(SpeechConstant.KEY_REQUEST_FOCUS, "true")
+        tv_title.text = m_store_name.getName()
+        tv_title_.text = m_store_name.getName()
+        try {
 
-            // 设置音频保存路径，保存音频格式支持pcm、wav，设置路径为sd卡请注意WRITE_EXTERNAL_STORAGE权限
-            // 注：AUDIO_FORMAT参数语记需要更新版本才能生效
-            mTts.setParameter(SpeechConstant.AUDIO_FORMAT, "wav")
-            mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, Environment.getExternalStorageDirectory().toString() + "/msc/tts.wav")
+            mTts = SpeechSynthesizer.createSynthesizer(activity) { code -> isSuccess = code == ErrorCode.SUCCESS }
+            if (isSuccess) {
+                // 清空参数
+                mTts.setParameter(SpeechConstant.PARAMS, null)
+                // 根据合成引擎设置相应参数
+                if (mEngineType == SpeechConstant.TYPE_CLOUD) {
+                    mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD)
+                    // 设置在线合成发音人
+                    mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan")
+                    //设置合成语速
+                    mTts.setParameter(SpeechConstant.SPEED, "80")
+                    //设置合成音调
+                    mTts.setParameter(SpeechConstant.PITCH, "50")
+                    //设置合成音量
+                    mTts.setParameter(SpeechConstant.VOLUME, "50")
+                } else {
+                    mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL)
+                    // 设置本地合成发音人 voicer为空，默认通过语记界面指定发音人。
+                    mTts.setParameter(SpeechConstant.VOICE_NAME, "")
+                    /**
+                     * TODO 本地合成不设置语速、音调、音量，默认使用语记设置
+                     * 开发者如需自定义参数，请参考在线合成参数设置
+                     */
+                }
+                //设置播放器音频流类型
+                mTts.setParameter(SpeechConstant.STREAM_TYPE, "3")
+                // 设置播放合成音频打断音乐播放，默认为true
+                mTts.setParameter(SpeechConstant.KEY_REQUEST_FOCUS, "true")
+
+                // 设置音频保存路径，保存音频格式支持pcm、wav，设置路径为sd卡请注意WRITE_EXTERNAL_STORAGE权限
+                // 注：AUDIO_FORMAT参数语记需要更新版本才能生效
+                mTts.setParameter(SpeechConstant.AUDIO_FORMAT, "wav")
+                mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, Environment.getExternalStorageDirectory().toString() + "/msc/tts.wav")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
     }
+
     override fun getLayoutID(): Int = R.layout.fragment_verify
 
     override fun processClick(view: View?) {
@@ -109,8 +112,8 @@ class VerifyFragment : BaseFragment() {
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 //&&s.subSequence(0,3).toString().equals("0715")
                 if (s?.length == 18) {
-                    requestVerify(s.toString(),m_user_id )
-                    ViseLog.i(m_user_id+"==="+m_user_name)
+                    requestVerify(s.toString(), m_user_id)
+                    ViseLog.i(m_user_id + "===" + m_user_name)
                 }
             }
 
@@ -121,6 +124,7 @@ class VerifyFragment : BaseFragment() {
         super.onHiddenChanged(hidden)
         et_verify_num.requestFocus()
     }
+
     private fun requestVerify(num: String, user_id: String) {
         var s: String
         val map = mutableMapOf<String, String>()
@@ -142,9 +146,7 @@ class VerifyFragment : BaseFragment() {
                         httpResult.msg = jo.optString("msg")
                         httpResult.response = jo.optString("data")
                         if (httpResult.status == 0) {
-
                             ViseLog.d(httpResult.response)
-
                             val result = Gson().fromJson(httpResult.response.toString(), VerifyOrderBean::class.java)
 //                            val result = Gson().fromJson("{\n" +
 //                                    "        \"audit_store_id\": \"1\",\n" +
@@ -205,16 +207,16 @@ class VerifyFragment : BaseFragment() {
 //                                    "        \"total_amount\": \"3.99\",\n" +
 //                                    "        \"ctime\": \"2017-09-20 16:13:37\"\n" +
 //                                    "    }", VerifyOrderBean::class.java)
-                            rl_verify.visibility=View.GONE
-                            val stringBuffer=StringBuffer()
+                            rl_verify.visibility = View.INVISIBLE
+                            val stringBuffer = StringBuffer()
                             stringBuffer.append("您好，您已成功购买")
-                            for (item in result.goods_data){
-                                stringBuffer.append(item.goods_name+item.goods_num+"件,")
+                            for (item in result.goods_data) {
+                                stringBuffer.append(item.goods_name + item.goods_num + "件,")
                             }
                             stringBuffer.append("            ")
-                            stringBuffer.append("共消费"+result.total_amount+"元")
+                            stringBuffer.append("共消费" + result.total_amount + "元")
 
-                            mTts.startSpeaking(stringBuffer.toString(),object  : SynthesizerListener {
+                            mTts.startSpeaking(stringBuffer.toString(), object : SynthesizerListener {
                                 override fun onBufferProgress(p0: Int, p1: Int, p2: Int, p3: String?) {
                                 }
 
@@ -237,8 +239,8 @@ class VerifyFragment : BaseFragment() {
                                 }
 
                             })
-                            rl_verified.visibility=View.VISIBLE
-                            iv_waves.visibility=View.VISIBLE
+                            rl_verified.visibility = View.VISIBLE
+                            iv_waves.visibility = View.VISIBLE
                             if (result != null) {
                                 val adapter: VerifyAdapter by lazy {
                                     VerifyAdapter(result.goods_data)
@@ -259,7 +261,7 @@ class VerifyFragment : BaseFragment() {
                                 tv_preferential.text = "优惠:" + s + " 满" + result.coupon_data.full_amount + "减" + result.coupon_data.reduce_amount
 
                             }
-                            tv_sure.visibility=View.VISIBLE
+                            tv_sure.visibility = View.VISIBLE
                             tv_num.text = "商品件数:" + result.total_num + ""
                             tv_amount.text = "合计：¥" + result.total_amount
                             tv_phone.text = "用户手机号：" + result.username.hidePhone()
@@ -267,16 +269,17 @@ class VerifyFragment : BaseFragment() {
                             activity.toast(httpResult.status.toString() + httpResult.msg + "")
                         }
                         tv_sure.setOnClickListener {
-                            iv_waves.visibility=View.GONE
+                            iv_waves.visibility = View.INVISIBLE
 
-                            tv_sure.visibility=View.INVISIBLE
-                            rl_verify.visibility=View.VISIBLE
-                            rl_verified.visibility=View.INVISIBLE
+                            tv_sure.visibility = View.INVISIBLE
+                            rl_verify.visibility = View.VISIBLE
+                            rl_verified.visibility = View.INVISIBLE
                             et_verify_num.setText("")
                             et_verify_num.requestFocus()
                         }
 
                     }
+
                     override fun onFail(errCode: Int, errMsg: String) {
 //                        dialog.dismiss()
                         et_verify_num.setText("")

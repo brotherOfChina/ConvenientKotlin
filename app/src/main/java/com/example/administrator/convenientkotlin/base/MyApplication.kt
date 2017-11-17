@@ -1,8 +1,6 @@
 package com.example.administrator.convenientkotlin.base
 
 import android.app.Application
-import android.content.Context
-import android.support.multidex.MultiDex
 import android.util.Log
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
 import com.iflytek.cloud.SpeechConstant
@@ -22,12 +20,8 @@ class MyApplication : Application() {
     companion object {
         var instance: MyApplication by DelegatesExt.notNullSingleValue()
     }
-    fun getApplication():Application = instance
-    override fun attachBaseContext(base: Context?) {
-        MultiDex.install(base);
-        super.attachBaseContext(base)
 
-    }
+
     override fun onCreate() {
         super.onCreate()
 //        SophixManager.getInstance().queryAndLoadNewPatch()

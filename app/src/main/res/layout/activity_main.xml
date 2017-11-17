@@ -40,11 +40,11 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_margin="10dp"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
             android:flipInterval="5000"
             android:inAnimation="@anim/anim_come_in"
-            android:outAnimation="@anim/anim_come_out">
+            android:outAnimation="@anim/anim_come_out"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp">
 
         </ViewFlipper>
 
@@ -52,12 +52,62 @@
             android:id="@+id/vp_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="50dp"
+            android:layout_toLeftOf="@+id/ll_content"
+            android:layout_toStartOf="@+id/ll_content">
 
 
         </android.support.v4.view.ViewPager>
 
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="320dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="65dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+             >
+                <TextView
+                    android:id="@+id/tv_top_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:background="@drawable/black_bg"
+                    android:textColor="@color/white"
+                    android:text="中央厨房"/>
+                <com.ezvizuikit.open.EZUIPlayer
+                    android:id="@+id/ez_play_top"
+                    android:layout_width="319dp"
+                    android:layout_height="wrap_content"
+                    />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/tv_top_"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:background="@drawable/black_bg"
+                    android:text="中央厨房"/>
+                <com.ezvizuikit.open.EZUIPlayer
+                    android:id="@+id/ez_play_bottom"
+                    android:layout_width="319dp"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
     </RelativeLayout>
 
 

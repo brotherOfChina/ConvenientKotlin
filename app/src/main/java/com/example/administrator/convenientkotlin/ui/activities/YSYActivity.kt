@@ -7,20 +7,22 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import com.example.administrator.convenientkotlin.R
+import com.example.administrator.convenientkotlin.base.MyApplication
+import com.example.administrator.convenientkotlin.extensions.DelegatesExt
 import com.example.administrator.convenientkotlin.ui.adapters.DeviceAdapter
 import com.videogo.openapi.EZOpenSDK
 import com.videogo.openapi.bean.EZDeviceInfo
 import com.vise.log.ViseLog
 import com.vise.xsnow.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_ysy.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
+
 
 class YSYActivity : BaseActivity() {
 
     val RESULT_CODE = 101
     val REQUEST_CODE = 100
+    var storeTopName: String by DelegatesExt.preference(MyApplication.instance, LensActivity.STORE_NAME_TOP, "中央厨房")
+    var storeBottomName: String by DelegatesExt.preference(MyApplication.instance, LensActivity.STORE_NAME_BOTTOM, "中央厨房")
     override fun bindEvent() {
 
     }
@@ -59,17 +61,23 @@ class YSYActivity : BaseActivity() {
 
     }
 
-    private fun loadData() = async(UI) {
+    private fun loadData() {
         EZOpenSDK.getInstance().setAccessToken("at.6jota6qx699vutle2jwam14scxtiylqc-9rgk0you04-0cbo99c-laufedsbj")
-        val result = bg {
-            EZOpenSDK.getInstance().getDeviceList(0, 20)
-        }
-        updateUI(result.await())
+        Thread({
+          val result=  EZOpenSDK.getInstance().getDeviceList(0, 20)
+            if (result!=null){
+              updateUI(result)
+            }
+        })
+
+
+
     }
 
     private fun updateUI(devives: List<EZDeviceInfo>) {
+        runOnUiThread {  }
         val deviceAdapter: DeviceAdapter by lazy {
-            DeviceAdapter(devives ) {
+            DeviceAdapter(devives) {
                 with(it) {
                     val intent = Intent(this@YSYActivity, LensActivity::class.java)
                     intent.putExtra("data", it)

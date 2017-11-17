@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.administrator.convenientkotlin">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +13,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    1
+
     <application
         android:name=".base.MyApplication"
         android:allowBackup="true"
@@ -46,7 +47,8 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <service android:name=".data.Server.UpdataService" />
+        <service android:name=".data.Server.UpdataService"
+            tools:ignore="InnerclassSeparator" />
         <activity
             android:name="com.videogo.main.EzvizWebViewActivity"
             android:configChanges="orientation|keyboardHidden"

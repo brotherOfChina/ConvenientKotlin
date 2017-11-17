@@ -1,7 +1,6 @@
 package com.example.administrator.convenientkotlin.base
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Window
 import android.view.WindowManager
@@ -12,8 +11,10 @@ import android.view.WindowManager
  *
  */
 abstract class BaseActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         //取消标题
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         //取消状态栏

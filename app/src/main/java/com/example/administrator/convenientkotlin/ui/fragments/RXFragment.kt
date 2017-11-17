@@ -9,20 +9,18 @@ import com.example.administrator.convenientkotlin.ui.activities.LensActivity
 import com.example.administrator.convenientkotlin.ui.adapters.DeviceAdapter
 import com.videogo.openapi.EZOpenSDK
 import com.videogo.openapi.bean.EZDeviceInfo
+import com.vise.log.ViseLog
 import com.vise.xsnow.http.ViseHttp
 import com.vise.xsnow.http.callback.ACallback
 import com.vise.xsnow.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_rxzx.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
 import java.util.*
 
 /**
  * Created by Administrator on 2017/9/4 0004.
  * 融信在线fragment
  */
-class RXFragment :BaseFragment(){
+class RXFragment : BaseFragment() {
     override fun initData() {
     }
 
@@ -32,7 +30,7 @@ class RXFragment :BaseFragment(){
     }
 
     override fun initView(contentView: View?) {
-        rv_devices  .layoutManager = GridLayoutManager(activity, 5)
+        rv_devices.layoutManager = GridLayoutManager(activity, 5)
         requestToken()
     }
 
@@ -44,7 +42,7 @@ class RXFragment :BaseFragment(){
                 .request(object : ACallback<YsyBean>() {
                     override fun onSuccess(data: YsyBean) {
                         loadData(data.data.accessToken)
-
+                        ViseLog.d(data.data.accessToken)
                     }
 
                     override fun onFail(errCode: Int, errMsg: String) {
@@ -55,25 +53,30 @@ class RXFragment :BaseFragment(){
 
     override fun bindEvent() {
     }
-    private fun loadData(token:String) = async(UI) {
+
+    private fun loadData(token: String) {
 
         EZOpenSDK.getInstance().setAccessToken(token)
-        val result = bg {
-            EZOpenSDK.getInstance().getDeviceList(0, 20)
-        }
-        updateUI(result.await())
+        Thread({
+           val result= EZOpenSDK.getInstance().getDeviceList(0, 20)
+            if (result!=null){
+                 updateUI(result)
+            }
+        }).start()
     }
-
     private fun updateUI(devives: List<EZDeviceInfo>) {
-        val deviceAdapter: DeviceAdapter by lazy {
-            DeviceAdapter(devives ) {
-                with(it) {
-                    val intent = Intent(activity, LensActivity::class.java)
-                    intent.putExtra("data", it)
-                    startActivity(intent)
+        activity.runOnUiThread {
+            val deviceAdapter: DeviceAdapter by lazy {
+                DeviceAdapter(devives) {
+                    with(it) {
+                        val intent = Intent(activity, LensActivity::class.java)
+                        intent.putExtra("data", it)
+                        startActivity(intent)
+                    }
                 }
             }
+            rv_devices.adapter = deviceAdapter
         }
-        rv_devices.adapter = deviceAdapter
+
     }
 }

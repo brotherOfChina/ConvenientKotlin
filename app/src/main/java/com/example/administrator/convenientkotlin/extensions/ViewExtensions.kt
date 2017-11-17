@@ -1,11 +1,14 @@
 package com.example.administrator.convenientkotlin.extensions
 
 import android.content.Context
+import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.administrator.convenientkotlin.R
+
+
 
 /**
  * Created by Administrator on 2017/8/27 0027.
@@ -16,17 +19,6 @@ var TextView.textColor: Int
     get() = currentTextColor
     set(value) = setTextColor(value)
 
-fun View.slideExt() {
-    if (translationY == 0f) {
-        animate().translationY(-height.toFloat())
-    }
-}
-
-fun View.slideEnter() {
-    if (translationY < 0f) {
-        animate().translationY(0f)
-    }
-}
 
 fun ImageView?.show(url: String?) {
     Glide.with(this?.ctx).load(url)
@@ -36,4 +28,8 @@ fun ImageView?.show(url: String?) {
             .crossFade()
             .dontAnimate().
             into(this)
+}
+fun Float.dp2px(context: Context):Int{
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+            this, context.resources.displayMetrics).toInt()
 }
