@@ -42,45 +42,25 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     //support
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     //kotlin
     compile "org.jetbrains.anko:anko-common:$anko_version"
-//    compile "org.jetbrains.anko:anko-sqlite:$anko_version"
-//    compile "org.jetbrains.anko:anko-coroutines:$anko_version"
-
-    //dagger
-
-    //一般工具依赖库
-
-    //Adding Components to your Project
-
-
     compile files('libs/android-core-3.3.0.jar')
-
     //萤石云
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
-
     //热修复
-    compile 'com.hikvision.ezviz:ezuikit:1.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile 'com.google.dagger:dagger:2.4'
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
     compile 'com.vise.xiaoyaoyou:xsnow:2.0.2'
-
-    //    compile 'com.aliyun.ams:alicloud-android-hotfix:3.1.3'
-    compile 'com.android.support:multidex:1.0.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.4'
-
+    implementation files('libs/EZOpenSDK_V4.7.1.20171109.jar')
+    implementation files('libs/EZUIKit_1.4.jar')
 }
 kotlin {
     experimental {

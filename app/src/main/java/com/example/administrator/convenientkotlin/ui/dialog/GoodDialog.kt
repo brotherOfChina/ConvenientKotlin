@@ -25,7 +25,7 @@ class GoodDialog(ctx:Context,val goodBean: GoodBean, themeResId:Int=R.style.load
             iv_qr_code.setImageBitmap(Qrcode.getQRCode())
             iv_good_img.show(image_default)
             tv_goods_name.text=name
-            tv_goods_price.text=price
+            tv_goods_price.text="￥"+price
             tv_goods_intro.text=memo
             iv_close.setOnClickListener{dismiss()}
 

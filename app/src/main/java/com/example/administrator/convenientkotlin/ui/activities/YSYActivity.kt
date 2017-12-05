@@ -15,6 +15,7 @@ import com.videogo.openapi.bean.EZDeviceInfo
 import com.vise.log.ViseLog
 import com.vise.xsnow.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_ysy.*
+import org.jetbrains.anko.doAsync
 
 
 class YSYActivity : BaseActivity() {
@@ -75,7 +76,7 @@ class YSYActivity : BaseActivity() {
     }
 
     private fun updateUI(devives: List<EZDeviceInfo>) {
-        runOnUiThread {  }
+        doAsync {  }
         val deviceAdapter: DeviceAdapter by lazy {
             DeviceAdapter(devives) {
                 with(it) {

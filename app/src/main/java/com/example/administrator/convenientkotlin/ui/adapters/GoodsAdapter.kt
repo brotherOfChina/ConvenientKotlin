@@ -32,7 +32,7 @@ class GoodsAdapter(val data:List<GoodBean>,val itemClick: (GoodBean) -> Unit):Re
                 itemView?.iv_goods_img?.show(image_default)
                 itemView.tv_goods_name.text=name
                 itemView?.tv_goods_intro?.text=memo
-                itemView?.tv_goods_price?.text=price
+                itemView?.tv_goods_price?.text="￥"+price
                 itemView?.setOnClickListener { itemClick(this) }
             }
         }

@@ -61,7 +61,7 @@ class TypeFragment : BaseFragment(),GoodsResult<ResponseBean<GoodBean>> {
                         GoodDialog(context, it).show()
                     }
                 }
-                rv_type.layoutManager = GridLayoutManager(activity, 5)
+                rv_type.layoutManager = GridLayoutManager(activity, 4)
                 rv_type.adapter = adapter
             }
         })

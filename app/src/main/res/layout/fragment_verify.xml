@@ -1,11 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_verified"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="8"
+            android:background="#ffffff"
+            android:visibility="gone"
+
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/iv_title" />
+
+            <TextView
+                android:id="@+id/tv_title_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center_horizontal"
+                android:textColor="#111111"
+                android:textSize="26sp" />
+
+            <LinearLayout
+                android:id="@+id/ll"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="100dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:gravity="center"
+                    android:text="项目名称"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+
+                    android:gravity="center"
+                    android:text="数量"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+
+                    android:text="金额"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_verify"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll"
 
 
+                />
+
+            <ImageView
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_above="@+id/cv"
+                android:padding="3dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/iv_show" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/iv_waves"
+                android:layout_margin="2dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="start"
+                        android:padding="5dp"
+                        android:textColor="@color/content_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_preferential"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_order"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:gravity="start"
+                        android:padding="5dp"
+                        android:textColor="@color/content_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/tv_order"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="start"
+                        android:padding="5dp"
+
+                        android:textColor="@color/content_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_num"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="end"
+                        android:padding="5dp"
+                        android:textColor="#ff5000"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_amount"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="start"
+                        android:padding="5dp"
+                        android:textColor="@color/content_gray"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <ImageView
+                android:id="@+id/iv_waves"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/iv_waves" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_verify"
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:visibility="visible"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/iv_verify" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center_horizontal"
+                android:text="华都店"
+                android:textColor="#111111"
+                android:textSize="26sp" />
+
+            <EditText
+                android:id="@+id/et_verify_num"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@null"
+                android:hint="扫码核单"
+                android:inputType="number"
+                android:maxLength="19"
+                android:maxLines="1"
+                android:padding="10dp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_weight="6"
+
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/iv_one"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                android:layout_weight="1"
+
+                android:src="@drawable/sketch_two"
+
+                />
+
+            <ImageView
+                android:id="@+id/iv_two"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+
+                android:scaleType="fitXY"
+
+                android:src="@drawable/sketch_one"
+                />
+        </LinearLayout>
+    </LinearLayout>
     <TextView
         android:id="@+id/tv_sure"
         android:layout_width="wrap_content"
@@ -26,238 +267,9 @@
         />
 
 
-    <RelativeLayout
-        android:id="@+id/rl_verify"
-        android:layout_width="357dp"
-        android:layout_height="500dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/iv_verify" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:text="华都店"
-            android:textColor="#111111"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/et_verify_num"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@null"
-            android:hint="扫码核单"
-            android:inputType="number"
-            android:maxLength="19"
-            android:maxLines="1"
-            android:padding="10dp" />
-    </RelativeLayout>
-
-    <ImageView
-        android:layout_marginTop="10dp"
-        android:id="@+id/iv_one"
-        android:layout_width="260dp"
-        android:layout_height="250dp"
-        android:scaleType="fitXY"
-
-        android:layout_toEndOf="@+id/rl_verify"
-        android:layout_toRightOf="@+id/rl_verify"
-        android:src="@drawable/sketch_two"
-
-        />
-
-    <ImageView
-        android:id="@+id/iv_two"
-        android:layout_width="260dp"
-        android:layout_height="250dp"
-        android:layout_below="@+id/iv_one"
-        android:scaleType="fitXY"
-        android:layout_toEndOf="@+id/rl_verify"
-        android:layout_toRightOf="@+id/rl_verify"
-        android:src="@drawable/sketch_one"
-       />
 
 
-    <RelativeLayout
-        android:id="@+id/rl_verified"
-        android:layout_width="357dp"
-        android:layout_height="500dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="#ffffff"
-        android:visibility="invisible"
 
-        >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="83.5dp"
-            android:src="@drawable/iv_title" />
-
-        <TextView
-            android:id="@+id/tv_title_"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:textColor="#111111"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:id="@+id/ll"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:gravity="center"
-                android:text="项目名称"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-
-                android:gravity="center"
-                android:text="数量"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-
-                android:text="金额"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_verify"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll"
-
-
-            />
-
-        <ImageView
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_above="@+id/cv"
-            android:padding="3dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/iv_show" />
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/iv_waves"
-            android:layout_margin="2dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_order"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:gravity="start"
-                    android:padding="5dp"
-                    android:textColor="@color/content_gray"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_preferential"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_order"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:gravity="start"
-                    android:padding="5dp"
-                    android:textColor="@color/content_gray"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/tv_order"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:gravity="start"
-                    android:padding="5dp"
-
-                    android:textColor="@color/content_gray"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_num"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:gravity="end"
-                    android:padding="5dp"
-                    android:textColor="#ff5000"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_amount"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="6dp"
-                    android:gravity="start"
-                    android:padding="5dp"
-                    android:textColor="@color/content_gray"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
-
-        <ImageView
-            android:id="@+id/iv_waves"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/iv_waves" />
-
-    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -23,6 +23,7 @@ class RequestApi{
             map.put("m", "Screen")
             map.put("v", "CV1")
             map.put("sign",SignUtil.getSignString(map))
+
             ViseHttp.POST().addParams(map)
                     .request(object :MyCallBack<ResponseBean<GoodBean>>(){
                         override fun onSuccess(data: ResponseBean<GoodBean>) {

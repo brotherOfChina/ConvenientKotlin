@@ -1,22 +1,22 @@
 package com.example.administrator.convenientkotlin.ui.activities
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
 import com.example.administrator.convenientkotlin.R
 import com.example.administrator.convenientkotlin.base.MyApplication
-import com.example.administrator.convenientkotlin.domain.model.BuyData
-import com.example.administrator.convenientkotlin.domain.model.NavBean
-import com.example.administrator.convenientkotlin.domain.model.ResponseNavBean
-import com.example.administrator.convenientkotlin.domain.model.YsyBean
+import com.example.administrator.convenientkotlin.data.Server.UpdataService
+import com.example.administrator.convenientkotlin.domain.model.*
 import com.example.administrator.convenientkotlin.extensions.DelegatesExt
 import com.example.administrator.convenientkotlin.extensions.getName
 import com.example.administrator.convenientkotlin.extensions.hidePhone
@@ -56,7 +56,7 @@ class MainActivity : BaseActivity() {
     var url_bottom: String by DelegatesExt.preference(MyApplication.instance, LensActivity.URL_BOTTOM, LensActivity.DEFAULT_URL_BOTTOM)
     lateinit var ezPlayTop: EZUIPlayer
     lateinit var ezPlayBottom: EZUIPlayer
-
+    lateinit var rv_nav: RecyclerView
     override fun bindEvent() {
 
         //请求数据所用的参数，sign将用一个通用方法进行添加
@@ -90,7 +90,6 @@ class MainActivity : BaseActivity() {
     }
 
 
-
     override fun initView() {
 
         store_name.text = "华都店"
@@ -105,19 +104,60 @@ class MainActivity : BaseActivity() {
             ListDialog(this, names)
         }
         store_name.setOnClickListener {
-            //            storeDialog.show()
 
-//            ViseLog.i(user_id)
             startActivity(Intent(this@MainActivity, UserActivity::class.java))
         }
         val fragmentList = listOf<Fragment>(
                 RXFragment(), TypeFragment(), GoodsFragment(), VerifyFragment()
         )
+
+
         vp_content.adapter = FrgmentAdapter(supportFragmentManager, fragmentList)
         vp_content.currentItem = 1
         vp_content.offscreenPageLimit = 4
+        requestVersion();
     }
 
+    /**
+     * 请求版本
+     */
+    private fun requestVersion() {
+        val map = mapOf(
+                "app" to "Index",
+                "class" to "Chkvison",
+                "sign" to "123456",
+                "type" to "bldApp",
+                "vison" to version
+        )
+        val maps= mutableMapOf<String,String>()
+        maps.put("app","Index")
+        maps.put("class","Chkvison")
+        maps.put("sign","123456")
+        maps.put("type","bldApp")
+        maps.put("vison",version)
+        val update = Intent(this, UpdataService::class.java)
+        ViseHttp.POST().baseUrl("http://www.jinxiangqizhong.com/api/")
+                .addParams(maps).request(object : ACallback<ResponseData<VersionBean>>() {
+            override fun onFail(errCode: Int, errMsg: String?) {
+                ViseLog.d("bld",errMsg)
+            }
+
+
+            override fun onSuccess(data:ResponseData<VersionBean>?) {
+                if (data?.status .equals("1")) {
+                   val builder= AlertDialog.Builder(context)
+                    builder.setMessage("发现新版本，请更新！").setPositiveButton("确定",object : DialogInterface.OnClickListener{
+                        override fun onClick(dialog: DialogInterface?, which: Int) {
+                            update.putExtra("downloadurl", data?.data?.url)
+                            startService(update)
+                        }
+                    }).create().show()
+
+                }
+            }
+        })
+    }
+   val context=this
     fun getBuyData(store_id: String) {
         val currentTime = System.currentTimeMillis() / 1000
         val startTime = System.currentTimeMillis() / 1000 - 24 * 60 * 60 * 7
@@ -209,9 +249,9 @@ class MainActivity : BaseActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_main)
+        rv_nav = findViewById(R.id.rv_nav) as RecyclerView;
         rv_nav.layoutManager = LinearLayoutManager(this)
         tv_top_name.setOnClickListener {
-            ViseLog.d("到门口啊")
             vp_content.currentItem = 0
         }
         ezPlayTop = findViewById(R.id.ez_play_top) as EZUIPlayer
@@ -252,7 +292,7 @@ class MainActivity : BaseActivity() {
         //设置debug模式，输出log信息
         EZUIKit.setDebug(true)
         //设置播放资源参数
-        ezPlayTop.setCallBack(object :EZUIPlayer.EZUIPlayerCallBack {
+        ezPlayTop.setCallBack(object : EZUIPlayer.EZUIPlayerCallBack {
             override fun onPlayTime(p0: Calendar?) {
             }
 
@@ -261,7 +301,6 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onVideoSizeChange(p0: Int, p1: Int) {
-                Log.i("zpj","宽："+p0+"高："+p1)
             }
 
             override fun onPlayFail(p0: EZUIError?) {
@@ -280,7 +319,7 @@ class MainActivity : BaseActivity() {
 //        ezPlayTop.setUrl("ezopen://open.ys7.com/813756259/11.hd.live")
         ezPlayBottom.setSurfaceSize(600, 0)
 //        ezPlayBottom.setUrl("ezopen://open.ys7.com/813756259/7.hd.live")
-        ezPlayBottom.setCallBack(object :EZUIPlayer.EZUIPlayerCallBack{
+        ezPlayBottom.setCallBack(object : EZUIPlayer.EZUIPlayerCallBack {
             override fun onPlayTime(p0: Calendar?) {
             }
 
@@ -302,7 +341,6 @@ class MainActivity : BaseActivity() {
                 ezPlayBottom.releasePlayer()
             }
         })
-        ViseLog.d("url_top:" + url_top)
 
 
     }
@@ -338,7 +376,7 @@ class MainActivity : BaseActivity() {
         getBuyData(m_store_id)
         store_name.text = m_store_name.getName()
         ezPlayTop.setUrl("ezopen://open.ys7.com/813756259/11.hd.live")
-        ezPlayBottom.setUrl("ezopen://open.ys7.com/813756259/7.hd.live")
+        ezPlayBottom.setUrl("ezopen://open.ys7.com/813756259/10.hd.live")
 
     }
 

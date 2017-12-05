@@ -16,6 +16,15 @@ import com.vise.xsnow.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_lens.*
 
 class LensActivity : BaseActivity() {
+    override fun bindEvent() {
+    }
+
+    override fun initData() {
+    }
+
+    override fun processClick(view: View?) {
+    }
+
     companion object {
         val URL_Top="lens_url_top"
         val DEFAULT_URL_TOP="ezopen://open.ys7.com/813756259/2.hd.live"
@@ -28,18 +37,13 @@ class LensActivity : BaseActivity() {
     }
     var url : String by DelegatesExt.preference(MyApplication.instance, URL_Top, DEFAULT_URL_TOP)
     var accessToken:String by DelegatesExt.preference(MyApplication.instance, ACCESS_TOKEN, DEFAULT_ACCESS_TOKEN)
-    override fun bindEvent() {
-    }
+
 
     override fun initView() {
 
     }
 
-    override fun initData() {
-    }
 
-    override fun processClick(view: View?) {
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //取消标题

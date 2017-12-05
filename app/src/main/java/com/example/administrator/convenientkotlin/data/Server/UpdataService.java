@@ -1,5 +1,6 @@
 package com.example.administrator.convenientkotlin.data.Server;
 
+import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -153,6 +154,7 @@ public class UpdataService extends Service {
     }
 
 
+    @SuppressLint("WrongConstant")
     public void openFile(File file, Context context) {
         Intent intent = new Intent();
         intent.addFlags(268435456);

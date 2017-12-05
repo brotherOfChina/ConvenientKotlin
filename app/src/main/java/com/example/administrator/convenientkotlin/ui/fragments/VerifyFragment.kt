@@ -207,7 +207,7 @@ class VerifyFragment : BaseFragment() {
 //                                    "        \"total_amount\": \"3.99\",\n" +
 //                                    "        \"ctime\": \"2017-09-20 16:13:37\"\n" +
 //                                    "    }", VerifyOrderBean::class.java)
-                            rl_verify.visibility = View.INVISIBLE
+                            rl_verify.visibility = View.GONE
                             val stringBuffer = StringBuffer()
                             stringBuffer.append("您好，您已成功购买")
                             for (item in result.goods_data) {
@@ -273,7 +273,7 @@ class VerifyFragment : BaseFragment() {
 
                             tv_sure.visibility = View.INVISIBLE
                             rl_verify.visibility = View.VISIBLE
-                            rl_verified.visibility = View.INVISIBLE
+                            rl_verified.visibility = View.GONE
                             et_verify_num.setText("")
                             et_verify_num.requestFocus()
                         }

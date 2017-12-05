@@ -79,7 +79,10 @@
             android:name=".ui.activities.UserActivity"
             android:label="选择店铺界面"
             android:screenOrientation="landscape" />
-        <activity android:name=".ui.adapters.PlayAdapter"></activity>
+        <activity android:name=".ui.adapters.PlayAdapter"
+            android:label="播放店铺界面"
+            android:screenOrientation="landscape"/>
+        <service android:name=".data.Server.UpdataService" />
     </application>
 
 </manifest>

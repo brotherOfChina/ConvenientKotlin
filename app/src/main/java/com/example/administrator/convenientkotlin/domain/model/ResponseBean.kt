@@ -9,7 +9,7 @@ data class ResponseBean< T>(val status: Int, val msg: String, val data: DataBean
 data class ResponseNavBean< T>(val status: Int, val msg: String, val data: List<T>)
 data class ResponseDataBean<T>(val status: Int, val msg: String, val data: T)
 data class ResponseData<T>(val status: String, val msg: String, val data: T)
-
+data class VersionBean(val type: String,val vison:String,val url:String)
 data class NavBean(val internal: String,
                    val nav_id: String,
                    val nav_type: String,

@@ -30,7 +30,7 @@ class GoodsFragment : BaseFragment(), GoodsResult<ResponseBean<GoodBean>> {
 
     override fun bindEvent() {
         tv_title.text = "促销商品"
-        rv_goods.layoutManager = GridLayoutManager(activity, 5)
+        rv_goods.layoutManager = GridLayoutManager(activity, 4)
         getGoods("6", this)
 
     }
